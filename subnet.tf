@@ -1,13 +1,21 @@
+data "aws_availability_zones" "available" {
+  state = var.aws_availability_zones_availability
+}
+
+locals {
+  subnet_cidrs = cidrsubnets(var.vpc_cidr, var.subnet_additional_bits, var.subnet_additional_bits, var.subnet_additional_bits, var.subnet_additional_bits, var.subnet_additional_bits, var.subnet_additional_bits)
+}
+
 resource "aws_subnet" "public-subnet-1" {
-  depends_on = [aws_vpc.csye6225_vpc,
+  depends_on = [aws_vpc.csye6225_vpc, data.aws_availability_zones.available
   ]
 
   vpc_id            = aws_vpc.csye6225_vpc.id
-  cidr_block        = var.public_subnet_1_cidr
-  availability_zone = var.availability_zone_1
+  cidr_block        = local.subnet_cidrs[0]
+  availability_zone = data.aws_availability_zones.available.names[0]
 
   tags = {
-    Name = "public-subnet-1"
+    Name = var.public_subnet_1_name
   }
 }
 
@@ -16,11 +24,11 @@ resource "aws_subnet" "private-subnet-1" {
   ]
 
   vpc_id            = aws_vpc.csye6225_vpc.id
-  cidr_block        = var.private_subnet_1_cidr
-  availability_zone = var.availability_zone_1
+  cidr_block        = local.subnet_cidrs[3]
+  availability_zone = data.aws_availability_zones.available.names[0]
 
   tags = {
-    Name = "private-subnet-1"
+    Name = var.private_subnet_1_name
   }
 }
 
@@ -29,11 +37,11 @@ resource "aws_subnet" "public-subnet-2" {
   ]
 
   vpc_id            = aws_vpc.csye6225_vpc.id
-  cidr_block        = var.public_subnet_2_cidr
-  availability_zone = var.availability_zone_2
+  cidr_block        = local.subnet_cidrs[1]
+  availability_zone = data.aws_availability_zones.available.names[1]
 
   tags = {
-    Name = "public-subnet-2"
+    Name = var.public_subnet_2_name
   }
 }
 
@@ -42,11 +50,11 @@ resource "aws_subnet" "private-subnet-2" {
   ]
 
   vpc_id            = aws_vpc.csye6225_vpc.id
-  cidr_block        = var.private_subnet_2_cidr
-  availability_zone = var.availability_zone_2
+  cidr_block        = local.subnet_cidrs[4]
+  availability_zone = data.aws_availability_zones.available.names[1]
 
   tags = {
-    Name = "private-subnet-2"
+    Name = var.private_subnet_2_name
   }
 }
 
@@ -55,11 +63,11 @@ resource "aws_subnet" "public-subnet-3" {
   ]
 
   vpc_id            = aws_vpc.csye6225_vpc.id
-  cidr_block        = var.public_subnet_3_cidr
-  availability_zone = var.availability_zone_3
+  cidr_block        = local.subnet_cidrs[2]
+  availability_zone = data.aws_availability_zones.available.names[2]
 
   tags = {
-    Name = "public-subnet-3"
+    Name = var.public_subnet_3_name
   }
 }
 
@@ -68,10 +76,10 @@ resource "aws_subnet" "private-subnet-3" {
   ]
 
   vpc_id            = aws_vpc.csye6225_vpc.id
-  cidr_block        = var.private_subnet_3_cidr
-  availability_zone = var.availability_zone_3
+  cidr_block        = local.subnet_cidrs[5]
+  availability_zone = data.aws_availability_zones.available.names[2]
 
   tags = {
-    Name = "private-subnet-3"
+    Name = var.private_subnet_3_name
   }
 }

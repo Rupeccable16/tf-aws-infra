@@ -3,9 +3,31 @@ variable "vpc_cidr" {
   description = ""
 }
 
+variable "vpc_name" {
+  type        = string
+  description = ""
+}
+
+variable "public_route_table_name" {
+  type        = string
+  description = ""
+}
+
+variable "main_internet_gateway_name" {
+  type        = string
+  description = ""
+}
+variable "private_route_table_name" {
+  type        = string
+  description = ""
+}
 variable "region" {
-  type = string
-  #default     = "us-east-1"
+  type        = string
+  description = ""
+}
+
+variable "aws_availability_zones_availability" {
+  type        = string
   description = ""
 }
 
@@ -57,5 +79,40 @@ variable "availability_zone_3" {
 
 variable "internet_cidr" {
   type        = string
+  description = ""
+}
+
+variable "public_subnet_1_name" {
+  type        = string
+  description = ""
+}
+
+variable "private_subnet_1_name" {
+  type        = string
+  description = ""
+}
+
+variable "public_subnet_2_name" {
+  type        = string
+  description = ""
+}
+
+variable "private_subnet_2_name" {
+  type        = string
+  description = ""
+}
+
+variable "public_subnet_3_name" {
+  type        = string
+  description = ""
+}
+
+variable "private_subnet_3_name" {
+  type        = string
+  description = ""
+}
+
+variable "subnet_additional_bits" {
+  type        = number
   description = ""
 }
