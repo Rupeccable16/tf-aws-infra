@@ -8,7 +8,7 @@ resource "aws_route_table" "public_subnet_route_table" {
   }
 
   tags = {
-    Name = "public-subnet-route-table"
+    Name = var.public_route_table_name
   }
 }
 
@@ -17,7 +17,7 @@ resource "aws_route_table" "private_subnet_route_table" {
   vpc_id     = aws_vpc.csye6225_vpc.id
 
   tags = {
-    Name = "private-subnet-route-table"
+    Name = var.private_route_table_name
   }
 }
 
