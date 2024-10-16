@@ -1,9 +1,9 @@
 data "aws_ami" "latest_ami" {
   most_recent = true
-  owners      = ["self"]
+  owners      = [var.data_ami_owners]
   filter {
-    name   = "name"
-    values = ["csye6225_app_*"]
+    name   = var.data_ami_filter_parameter
+    values = [var.data_ami_filter_value]
   }
 }
 
@@ -12,14 +12,14 @@ data "aws_ami" "latest_ami" {
 resource "aws_instance" "my-ec2" {
   depends_on                  = [aws_vpc.csye6225_vpc]
   ami                         = data.aws_ami.latest_ami.id
-  instance_type               = "t2.small"
+  instance_type               = var.aws_instance_type
   subnet_id                   = aws_subnet.public-subnet-1.id
   associate_public_ip_address = true
 
   root_block_device {
     delete_on_termination = true
-    volume_size           = 25
-    volume_type           = "gp2"
+    volume_size           = var.aws_instance_rootblock_volsize
+    volume_type           = var.aws_instance_rootblock_voltype
   }
 
   disable_api_termination = false
@@ -27,6 +27,6 @@ resource "aws_instance" "my-ec2" {
   vpc_security_group_ids = [aws_security_group.application_security_group.id]
 
   tags = {
-    Name = "my-ec2"
+    Name = var.aws_instance_name
   }
 }
