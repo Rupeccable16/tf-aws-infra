@@ -117,7 +117,12 @@ variable "subnet_additional_bits" {
   description = ""
 }
 
-variable "data_ami_owners" {
+variable "data_ami_owner1" {
+  type = string
+  description = ""
+}
+
+variable "data_ami_owner2" {
   type = string
   description = ""
 }

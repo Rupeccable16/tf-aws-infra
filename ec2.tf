@@ -1,6 +1,6 @@
 data "aws_ami" "latest_ami" {
   most_recent = true
-  owners      = [var.data_ami_owners]
+  owners      = [var.data_ami_owner1,var.data_ami_owner2]
   filter {
     name   = var.data_ami_filter_parameter
     values = [var.data_ami_filter_value]
