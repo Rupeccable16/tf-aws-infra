@@ -1,6 +1,6 @@
 data "aws_ami" "latest_ami" {
   most_recent = true
-  owners      = [var.data_ami_owner1,var.data_ami_owner2]
+  owners      = [var.data_ami_owner1, var.data_ami_owner2]
   filter {
     name   = var.data_ami_filter_parameter
     values = [var.data_ami_filter_value]
@@ -15,7 +15,7 @@ resource "aws_instance" "my-ec2" {
   instance_type               = var.aws_instance_type
   subnet_id                   = aws_subnet.public-subnet-1.id
   associate_public_ip_address = true
-  key_name = var.aws_instance_key_name
+  key_name                    = var.aws_instance_key_name
 
   root_block_device {
     delete_on_termination = true
