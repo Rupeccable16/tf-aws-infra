@@ -15,6 +15,7 @@ resource "aws_instance" "my-ec2" {
   instance_type               = var.aws_instance_type
   subnet_id                   = aws_subnet.public-subnet-1.id
   associate_public_ip_address = true
+  key_name = var.aws_instance_key_name
 
   root_block_device {
     delete_on_termination = true

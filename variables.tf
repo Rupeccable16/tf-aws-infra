@@ -201,3 +201,8 @@ variable "webapp_port" {
   type = string
   description = ""
 }
+
+variable "aws_instance_key_name" {
+  type = string
+  description = ""
+}
