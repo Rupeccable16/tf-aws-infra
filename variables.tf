@@ -206,3 +206,18 @@ variable "aws_instance_key_name" {
   type        = string
   description = ""
 }
+
+variable "aws_sg_rds_name1" {
+  type        = string
+  description = ""
+}
+
+variable "aws_sg_rds_description" {
+  type        = string
+  description = ""
+}
+
+variable "aws_sg_rds_name2" {
+  type        = string
+  description = ""
+}
