@@ -221,3 +221,48 @@ variable "aws_sg_rds_name2" {
   type        = string
   description = ""
 }
+
+variable "aws_rds_storage" {
+  type        = number
+  description = ""
+}
+
+variable "aws_rds_engine" {
+  type        = string
+  description = ""
+}
+
+variable "aws_rds_engine_version" {
+  type        = string
+  description = ""
+}
+
+variable "aws_rds_instance_class" {
+  type        = string
+  description = ""
+}
+
+variable "aws_rds_identifier" {
+  type        = string
+  description = ""
+}
+
+variable "aws_rds_username" {
+  type        = string
+  description = ""
+}
+
+variable "aws_rds_password" {
+  type        = string
+  description = ""
+}
+
+variable "aws_rds_db_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_rds_parameter_grp_name" {
+  type        = string
+  description = ""
+}

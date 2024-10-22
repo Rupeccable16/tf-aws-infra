@@ -56,15 +56,16 @@ resource "aws_security_group" "database_security_group" {
   tags = {
     Name = var.aws_sg_name2
   }
-  
+
 }
 
 resource "aws_vpc_security_group_ingress_rule" "allow-webapp-to-rds" {
-  security_group_id = aws_security_group.database_security_group.id
-  cidr_ipv4 = aws_instance.my-ec2.private_ip #Connection only from the ec2's private ipv4
+  security_group_id            = aws_security_group.database_security_group.id
+  referenced_security_group_id = aws_security_group.application_security_group.id
+  #cidr_ipv4         = aws_instance.my-ec2.private_ip #Connection only from the ec2's private ipv4
   ip_protocol = var.ip_protocol_1
-  from_port = 5432
-  to_port = 5432
+  from_port   = 5432
+  to_port     = 5432
 }
 
 resource "aws_vpc_security_group_egress_rule" "allow-rds-out" {

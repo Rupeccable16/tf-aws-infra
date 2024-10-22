@@ -10,7 +10,7 @@ data "aws_ami" "latest_ami" {
 
 
 resource "aws_instance" "my-ec2" {
-  depends_on                  = [aws_vpc.csye6225_vpc]
+  depends_on                  = [aws_vpc.csye6225_vpc, aws_db_instance.my-db]
   ami                         = data.aws_ami.latest_ami.id
   instance_type               = var.aws_instance_type
   subnet_id                   = aws_subnet.public-subnet-1.id
@@ -26,6 +26,8 @@ resource "aws_instance" "my-ec2" {
   disable_api_termination = false
 
   vpc_security_group_ids = [aws_security_group.application_security_group.id]
+
+  user_data = ""
 
   tags = {
     Name = var.aws_instance_name
