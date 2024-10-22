@@ -27,7 +27,21 @@ resource "aws_instance" "my-ec2" {
 
   vpc_security_group_ids = [aws_security_group.application_security_group.id]
 
-  user_data = ""
+  user_data = <<EOF
+#!/bin/bash
+####################################################
+# Configure DB Connection                          #
+####################################################
+cd /opt/tomcat/bin
+touch setenv.sh
+echo "#!/bin/sh" > setenv.sh
+echo "JAVA_OPTS=\"\$JAVA_OPTS -Dspring.datasource.username=${var.availability_zone_1} -Dspring.datasource.password=${var.availability_zone_2}\"" >> setenv.sh
+.
+.
+.
+.
+
+  EOF
 
   tags = {
     Name = var.aws_instance_name
