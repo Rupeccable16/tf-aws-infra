@@ -1,6 +1,6 @@
 resource "aws_db_subnet_group" "db-subnet-grp" {
   name       = "main"
-  subnet_ids = [aws_subnet.private-subnet-1.id]
+  subnet_ids = [aws_subnet.private-subnet-1.id, aws_subnet.private-subnet-2.id]
 
   tags = {
     Name = "My DB subnet group"
@@ -25,6 +25,6 @@ resource "aws_db_instance" "my-db" {
   vpc_security_group_ids = [aws_security_group.database_security_group.id]
   db_subnet_group_name   = aws_db_subnet_group.db-subnet-grp.name # Copy the subnet group from the RDS Console
 
-  parameter_group_name = "mypostgresparams"
+  parameter_group_name = var.aws_rds_parameter_grp_name
   skip_final_snapshot  = true
 }

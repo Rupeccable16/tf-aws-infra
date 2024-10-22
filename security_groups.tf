@@ -49,12 +49,12 @@ resource "aws_vpc_security_group_egress_rule" "allow_outbound_traffic" {
 
 resource "aws_security_group" "database_security_group" {
   depends_on  = [aws_vpc.csye6225_vpc]
-  name        = var.aws_sg_name1
-  description = var.aws_sg_description
+  name        = var.aws_sg_rds_name1
+  description = var.aws_sg_rds_description
   vpc_id      = aws_vpc.csye6225_vpc.id
 
   tags = {
-    Name = var.aws_sg_name2
+    Name = var.aws_sg_rds_name2
   }
 
 }
