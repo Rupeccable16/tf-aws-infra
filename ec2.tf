@@ -44,12 +44,16 @@ PSQL_PORT="${var.psql_port}"
 
 echo "Writing to .env"
 {
-  echo "PSQL_USER=$PSQL_USER"
-  echo "PSQL_HOST=$PSQL_HOST"
-  echo "PSQL_PASS=$PSQL_PASS"
-  echo "PSQL_DBNAME=$PSQL_DBNAME"
-  echo "PORT=$PSQL_PORT"
+  echo "PSQL_USER=\"$PSQL_USER\""
+  echo "PSQL_HOST=\"$PSQL_HOST\""
+  echo "PSQL_PASS=\"$PSQL_PASS\""
+  echo "PSQL_DBNAME=\"$PSQL_DBNAME\""
+  echo "PORT=\"$PSQL_PORT\""
 } >> .env
+
+echo "Changing Ownership"
+sudo chown -R csye6225:csye6225 "/opt/webapp/.env"
+sudo chmod -R 755 /opt/webapp/.env
 
 
 EOF
