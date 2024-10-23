@@ -266,3 +266,8 @@ variable "aws_rds_parameter_grp_name" {
   type        = string
   description = ""
 }
+
+variable "psql_port" {
+  type        = number
+  description = ""
+}

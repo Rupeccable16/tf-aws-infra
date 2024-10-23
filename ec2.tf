@@ -40,6 +40,7 @@ PSQL_HOST="${aws_db_instance.my-db.address}"
 PSQL_USER="${var.aws_rds_username}"  
 PSQL_PASS="${var.aws_rds_password}"  
 PSQL_DBNAME="${var.aws_rds_db_name}" 
+PSQL_PORT="${var.psql_port}"
 
 echo "Writing to .env"
 {
@@ -47,10 +48,9 @@ echo "Writing to .env"
   echo "PSQL_HOST=$PSQL_HOST"
   echo "PSQL_PASS=$PSQL_PASS"
   echo "PSQL_DBNAME=$PSQL_DBNAME"
+  echo "PORT=$PSQL_PORT"
 } >> .env
 
-echo "Retrieving transferred .env, except local PSQL related info"
-grep -vE '^(PSQL_USER|PSQL_DBNAME|PSQL_HOST|PSQL_PASS)' /tmp/.env >> .env
 
 EOF
 
