@@ -10,7 +10,7 @@ data "aws_ami" "latest_ami" {
 
 
 resource "aws_instance" "my-ec2" {
-  depends_on                  = [aws_vpc.csye6225_vpc]
+  depends_on                  = [aws_vpc.csye6225_vpc, aws_db_instance.my-db]
   ami                         = data.aws_ami.latest_ami.id
   instance_type               = var.aws_instance_type
   subnet_id                   = aws_subnet.public-subnet-1.id
@@ -26,6 +26,33 @@ resource "aws_instance" "my-ec2" {
   disable_api_termination = false
 
   vpc_security_group_ids = [aws_security_group.application_security_group.id]
+
+  user_data = <<EOF
+#!/bin/bash
+####################################################
+# Configure DB Connection                          #
+####################################################
+cd /opt/webapp
+touch .env
+
+echo "Fetching db details"
+PSQL_HOST="${aws_db_instance.my-db.address}" 
+PSQL_USER="${var.aws_rds_username}"  
+PSQL_PASS="${var.aws_rds_password}"  
+PSQL_DBNAME="${var.aws_rds_db_name}" 
+PSQL_PORT="${var.psql_port}"
+
+echo "Writing to .env"
+{
+  echo "PSQL_USER=$PSQL_USER"
+  echo "PSQL_HOST=$PSQL_HOST"
+  echo "PSQL_PASS=$PSQL_PASS"
+  echo "PSQL_DBNAME=$PSQL_DBNAME"
+  echo "PORT=$PSQL_PORT"
+} >> .env
+
+
+EOF
 
   tags = {
     Name = var.aws_instance_name
