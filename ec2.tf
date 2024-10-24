@@ -40,7 +40,7 @@ PSQL_HOST="${aws_db_instance.my-db.address}"
 PSQL_USER="${var.aws_rds_username}"  
 PSQL_PASS="${var.aws_rds_password}"  
 PSQL_DBNAME="${var.aws_rds_db_name}" 
-PSQL_PORT="${var.psql_port}"
+PSQL_PORT="${var.webapp_port}"
 
 echo "Writing to .env"
 {

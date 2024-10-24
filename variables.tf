@@ -267,7 +267,17 @@ variable "aws_rds_parameter_grp_name" {
   description = ""
 }
 
-variable "psql_port" {
-  type        = number
+variable "db_psql_port" {
+  type        = string
+  description = ""
+}
+
+variable "aws_db_subnet_grp_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_db_subnet_grp_nametag" {
+  type        = string
   description = ""
 }
