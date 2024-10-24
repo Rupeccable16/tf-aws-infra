@@ -64,8 +64,8 @@ resource "aws_vpc_security_group_ingress_rule" "allow-webapp-to-rds" {
   referenced_security_group_id = aws_security_group.application_security_group.id
   #cidr_ipv4         = aws_instance.my-ec2.private_ip #Connection only from the ec2's private ipv4
   ip_protocol = var.ip_protocol_1
-  from_port   = 5432
-  to_port     = 5432
+  from_port   = var.db_psql_port
+  to_port     = var.db_psql_port
 }
 
 resource "aws_vpc_security_group_egress_rule" "allow-rds-out" {
