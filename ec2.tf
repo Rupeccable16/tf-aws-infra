@@ -41,6 +41,7 @@ PSQL_USER="${var.aws_rds_username}"
 PSQL_PASS="${var.aws_rds_password}"  
 PSQL_DBNAME="${var.aws_rds_db_name}" 
 PSQL_PORT="${var.webapp_port}"
+AWS_BUCKET_NAME="${aws_s3_bucket.example.bucket_domain_name}"
 
 echo "Writing to .env"
 {
