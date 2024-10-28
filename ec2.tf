@@ -10,7 +10,7 @@ data "aws_ami" "latest_ami" {
 
 
 resource "aws_instance" "my-ec2" {
-  depends_on                  = [aws_vpc.csye6225_vpc, aws_db_instance.my-db]
+  depends_on                  = [aws_vpc.csye6225_vpc, aws_db_instance.my-db, aws_s3_bucket.example]
   ami                         = data.aws_ami.latest_ami.id
   instance_type               = var.aws_instance_type
   subnet_id                   = aws_subnet.public-subnet-1.id
