@@ -7,7 +7,10 @@ data "aws_ami" "latest_ami" {
   }
 }
 
-
+resource "aws_iam_instance_profile" "ec2_instance_profile" {
+  name = "ec2_instance_profile"
+  role = aws_iam_role.ec2_role.name
+}
 
 resource "aws_instance" "my-ec2" {
   depends_on                  = [aws_vpc.csye6225_vpc, aws_db_instance.my-db, aws_s3_bucket.example]
@@ -16,6 +19,8 @@ resource "aws_instance" "my-ec2" {
   subnet_id                   = aws_subnet.public-subnet-1.id
   associate_public_ip_address = true
   key_name                    = var.aws_instance_key_name
+
+  iam_instance_profile = aws_iam_instance_profile.ec2_instance_profile.name
 
   root_block_device {
     delete_on_termination = true
@@ -41,7 +46,8 @@ PSQL_USER="${var.aws_rds_username}"
 PSQL_PASS="${var.aws_rds_password}"  
 PSQL_DBNAME="${var.aws_rds_db_name}" 
 PSQL_PORT="${var.webapp_port}"
-AWS_BUCKET_NAME="${aws_s3_bucket.example.bucket_domain_name}"
+AWS_BUCKET_NAME="${aws_s3_bucket.example.id}"
+AWS_REGION="${var.region}"
 
 echo "Writing to .env"
 {
@@ -50,6 +56,9 @@ echo "Writing to .env"
   echo "PSQL_PASS=\"$PSQL_PASS\""
   echo "PSQL_DBNAME=\"$PSQL_DBNAME\""
   echo "PORT=\"$PSQL_PORT\""
+  echo "AWS_BUCKET_NAME=\"$AWS_BUCKET_NAME\""
+  echo "AWS_REGION=\"$AWS_REGION\""
+
 } >> .env
 
 echo "Changing Ownership"
