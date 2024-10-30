@@ -1,6 +1,6 @@
 resource "aws_db_subnet_group" "db-subnet-grp" {
   name       = var.aws_db_subnet_grp_name
-  subnet_ids = [aws_subnet.private-subnet-2.id, aws_subnet.private-subnet-1.id, aws_subnet.private-subnet-3]
+  subnet_ids = [aws_subnet.private-subnet-2.id, aws_subnet.private-subnet-1.id, aws_subnet.private-subnet-3.id]
 
   tags = {
     Name = var.aws_db_subnet_grp_nametag
