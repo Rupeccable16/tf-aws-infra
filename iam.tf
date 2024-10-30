@@ -1,5 +1,5 @@
 resource "aws_iam_role" "ec2_role" {
-  name = "ec2_role"
+  name = var.aws_ec2_role
 
   # Terraform's "jsonencode" function converts a
   # Terraform expression result to valid JSON syntax.
@@ -23,10 +23,25 @@ resource "aws_iam_role" "ec2_role" {
 }
 
 data "aws_iam_policy" "s3_policy" {
-  name = "s3-get-post-delete-list"
+  name = var.aws_s3_get_post_delete_list_policy_name
 }
 
 resource "aws_iam_role_policy_attachment" "test-attach" {
   role       = aws_iam_role.ec2_role.name
   policy_arn = data.aws_iam_policy.s3_policy.arn
+}
+
+resource "aws_iam_role_policy_attachment" "cloudWatchAgent" {
+  role = aws_iam_role.ec2_role.name
+  policy_arn = var.aws_cloudWatchAgent_policy_arn
+}
+
+resource "aws_iam_role_policy_attachment" "cloudWatchLogging" {
+  role = aws_iam_role.ec2_role.name
+  policy_arn =var.aws_cloudWatchLogging_policy_arn
+}
+
+resource "aws_iam_role_policy_attachment" "cloudWatchMetrics" {
+  role = aws_iam_role.ec2_role.name
+  policy_arn = var.aws_cloudWatchMetrics_policy_arn
 }

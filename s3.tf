@@ -3,10 +3,10 @@ resource "random_uuid" "uuid" {
 
 resource "aws_s3_bucket" "example" {
   bucket = "csye6225-bucket-${random_uuid.uuid.result}" #should be uuid
-
+  force_destroy = true
   tags = {
-    Name        = "My bucket"
-    Environment = "Dev"
+    Name        = var.aws_s3_bucket_tag_name
+    Environment = var.aws_s3_bucket_tag_environment
   }
 }
 
@@ -15,11 +15,11 @@ resource "aws_s3_bucket_lifecycle_configuration" "example" {
   bucket = aws_s3_bucket.example.id
 
   rule {
-    id = "rule-1"
+    id = var.aws_s3_bucket_rule_id
 
     transition {
-      days          = 90
-      storage_class = "STANDARD_IA"
+      days          = var.aws_s3_bucket_transition_days
+      storage_class = var.aws_s3_bucket_storage_class
     }
 
 

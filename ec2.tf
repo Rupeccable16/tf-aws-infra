@@ -8,7 +8,7 @@ data "aws_ami" "latest_ami" {
 }
 
 resource "aws_iam_instance_profile" "ec2_instance_profile" {
-  name = "ec2_instance_profile"
+  name = var.aws_iam_instance_profile_name
   role = aws_iam_role.ec2_role.name
 }
 
@@ -65,6 +65,12 @@ echo "Changing Ownership"
 sudo chown -R csye6225:csye6225 "/opt/webapp/.env"
 sudo chmod -R 755 /opt/webapp/.env
 
+# echo "Configuring cloudwatch agent"
+# sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl \
+#     -a fetch-config \
+#     -m ec2 \
+#     -c file:/opt/webapp/cloudWatchConfig/amazon-cloudwatch-agent.json \
+#     -s
 
 EOF
 
