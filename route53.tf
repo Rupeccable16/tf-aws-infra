@@ -18,4 +18,6 @@ resource "aws_route53_record" "demo_subdomain" {
   type    = var.aws_route53_demo_subdomain_record_type
   ttl     = var.aws_route53_demo_subdomain_record_ttl
   records = [aws_instance.my-ec2.public_ip]
+
+
 }
