@@ -294,70 +294,70 @@ variable "aws_s3_get_post_delete_list_policy_name" {
 
 variable "aws_cloudWatchAgent_policy_arn" {
   type        = string
-  description = ""  
+  description = ""
 }
 
 variable "aws_cloudWatchLogging_policy_arn" {
   type        = string
-  description = ""    
+  description = ""
 }
 
-variable "aws_cloudWatchMetrics_policy_arn"{
+variable "aws_cloudWatchMetrics_policy_arn" {
   type        = string
-  description = ""    
+  description = ""
 }
 
 variable "aws_iam_instance_profile_name" {
   type        = string
-  description = ""   
+  description = ""
 }
 
-variable "aws_s3_bucket_tag_name"{
+variable "aws_s3_bucket_tag_name" {
   type        = string
-  description = ""     
+  description = ""
 }
 
 variable "aws_s3_bucket_tag_environment" {
   type        = string
-  description = ""      
+  description = ""
 }
 
 variable "aws_s3_bucket_rule_id" {
   type        = string
-  description = ""   
+  description = ""
 }
 
 variable "aws_s3_bucket_transition_days" {
   type        = number
-  description = ""   
+  description = ""
 }
 
 variable "aws_s3_bucket_storage_class" {
   type        = string
-  description = ""   
+  description = ""
 }
 
 variable "aws_route53_curr_acc_zone_id" {
   type        = string
-  description = ""   
+  description = ""
 }
 
 variable "aws_route53_demo_acc_zone_id" {
   type        = string
-  description = ""   
+  description = ""
 }
 
 variable "aws_route53_demo_subdomain_name" {
   type        = string
-  description = ""   
+  description = ""
 }
 
 variable "aws_route53_demo_subdomain_record_type" {
   type        = string
-  description = ""   
+  description = ""
 }
 
 variable "aws_route53_demo_subdomain_record_ttl" {
   type        = number
-  description = ""     
+  description = ""
 }

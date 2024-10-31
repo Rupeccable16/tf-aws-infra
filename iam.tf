@@ -32,16 +32,16 @@ resource "aws_iam_role_policy_attachment" "test-attach" {
 }
 
 resource "aws_iam_role_policy_attachment" "cloudWatchAgent" {
-  role = aws_iam_role.ec2_role.name
+  role       = aws_iam_role.ec2_role.name
   policy_arn = var.aws_cloudWatchAgent_policy_arn
 }
 
 resource "aws_iam_role_policy_attachment" "cloudWatchLogging" {
-  role = aws_iam_role.ec2_role.name
-  policy_arn =var.aws_cloudWatchLogging_policy_arn
+  role       = aws_iam_role.ec2_role.name
+  policy_arn = var.aws_cloudWatchLogging_policy_arn
 }
 
 resource "aws_iam_role_policy_attachment" "cloudWatchMetrics" {
-  role = aws_iam_role.ec2_role.name
+  role       = aws_iam_role.ec2_role.name
   policy_arn = var.aws_cloudWatchMetrics_policy_arn
 }

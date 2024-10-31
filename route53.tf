@@ -12,12 +12,12 @@ data "aws_route53_zone" "curr_acc_zone" {
 }
 
 resource "aws_route53_record" "demo_subdomain" {
-    depends_on = [ aws_instance.my-ec2 ]
-  zone_id = var.aws_route53_demo_acc_zone_id
-  name    = var.aws_route53_demo_subdomain_name
-  type    = var.aws_route53_demo_subdomain_record_type
-  ttl     = var.aws_route53_demo_subdomain_record_ttl
-  records = [aws_instance.my-ec2.public_ip]
+  depends_on = [aws_instance.my-ec2]
+  zone_id    = var.aws_route53_demo_acc_zone_id
+  name       = var.aws_route53_demo_subdomain_name
+  type       = var.aws_route53_demo_subdomain_record_type
+  ttl        = var.aws_route53_demo_subdomain_record_ttl
+  records    = [aws_instance.my-ec2.public_ip]
 
 
 }

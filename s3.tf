@@ -2,7 +2,7 @@ resource "random_uuid" "uuid" {
 }
 
 resource "aws_s3_bucket" "example" {
-  bucket = "csye6225-bucket-${random_uuid.uuid.result}" #should be uuid
+  bucket        = "csye6225-bucket-${random_uuid.uuid.result}" #should be uuid
   force_destroy = true
   tags = {
     Name        = var.aws_s3_bucket_tag_name
@@ -38,7 +38,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "example" {
 
   rule {
     apply_server_side_encryption_by_default {
-      sse_algorithm     = "AES256"
+      sse_algorithm = "AES256"
     }
   }
 
@@ -47,6 +47,6 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "example" {
 #object
 resource "aws_s3_object" "object" {
   bucket = aws_s3_bucket.example.id
-  key    = "image-${random_uuid.uuid.result}"  #random uuid for each object
+  key    = "image-${random_uuid.uuid.result}" #random uuid for each object
 
 }
