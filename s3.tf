@@ -43,10 +43,3 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "example" {
   }
 
 }
-
-#object
-resource "aws_s3_object" "object" {
-  bucket = aws_s3_bucket.example.id
-  key    = "image-${random_uuid.uuid.result}" #random uuid for each object
-
-}
