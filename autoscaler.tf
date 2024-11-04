@@ -17,6 +17,7 @@ resource "aws_autoscaling_group" "autoscaler_grp" {
 
   launch_template {
     id = aws_launch_template.ec2_launch_template.id
+    version = "$Latest"
   }
 
   #   instance_maintenance_policy {
