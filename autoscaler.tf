@@ -16,7 +16,7 @@ resource "aws_autoscaling_group" "autoscaler_grp" {
   vpc_zone_identifier = [aws_subnet.public-subnet-1.id, aws_subnet.public-subnet-2.id, aws_subnet.public-subnet-3.id]
 
   launch_template {
-    id = aws_launch_template.ec2_launch_template.id
+    id      = aws_launch_template.ec2_launch_template.id
     version = "$Latest"
   }
 

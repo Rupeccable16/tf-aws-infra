@@ -95,8 +95,8 @@ resource "aws_iam_instance_profile" "ec2_instance_profile" {
 
 #Refer previous AMI and then above ec2 template. Other info not required
 resource "aws_launch_template" "ec2_launch_template" {
-  depends_on = [ aws_vpc.csye6225_vpc, aws_s3_bucket.example ]
-  name = "ec2-launch-template"
+  depends_on = [aws_vpc.csye6225_vpc, aws_s3_bucket.example]
+  name       = "ec2-launch-template"
 
   block_device_mappings {
     device_name = "/dev/sda1" #root block, same in AMI
@@ -127,7 +127,7 @@ resource "aws_launch_template" "ec2_launch_template" {
 
   network_interfaces {
     associate_public_ip_address = true
-    security_groups = [ aws_security_group.application_security_group.id ]
+    security_groups             = [aws_security_group.application_security_group.id]
   }
 
   lifecycle {
