@@ -57,7 +57,7 @@ resource "aws_autoscaling_group" "autoscaler_grp" {
 
 resource "aws_autoscaling_attachment" "attach_autoscaler_and_loadbalancer" {
   autoscaling_group_name = aws_autoscaling_group.autoscaler_grp.name
-  lb_target_group_arn = aws_lb_target_group.lb_target_grp.arn
+  lb_target_group_arn    = aws_lb_target_group.lb_target_grp.arn
 }
 
 resource "aws_autoscaling_policy" "scale_up" {
