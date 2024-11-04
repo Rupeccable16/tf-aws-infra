@@ -150,6 +150,10 @@ resource "aws_launch_template" "ec2_launch_template" {
     associate_public_ip_address = true
   }
 
+  lifecycle {
+    create_before_destroy = true #Read up more about this
+  }
+
   # placement {
   #   availability_zone = "us-west-2a"       #Who takes care of where the instances are placed, which subnet and what id?
   # }

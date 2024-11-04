@@ -19,51 +19,48 @@ resource "aws_autoscaling_group" "autoscaler_grp" {
     id = aws_launch_template.ec2_launch_template.id
   }
 
-  instance_maintenance_policy {
-    min_healthy_percentage = 90
-    max_healthy_percentage = 120
-  }
+  #   instance_maintenance_policy {
+  #     min_healthy_percentage = 90
+  #     max_healthy_percentage = 120
+  #   }
 
-  initial_lifecycle_hook {
-    name                 = "foobar"
-    default_result       = "CONTINUE"
-    heartbeat_timeout    = 2000
-    lifecycle_transition = "autoscaling:EC2_INSTANCE_LAUNCHING"
+  #   initial_lifecycle_hook {
+  #     name                 = "foobar"
+  #     default_result       = "CONTINUE"
+  #     heartbeat_timeout    = 2000
+  #     lifecycle_transition = "autoscaling:EC2_INSTANCE_LAUNCHING"
 
-    notification_metadata = jsonencode({
-      foo = "bar"
-    })
+  #     notification_metadata = jsonencode({
+  #       foo = "bar"
+  #     })
 
-    notification_target_arn = "arn:aws:sqs:us-east-1:444455556666:queue1*"
-    role_arn                = "arn:aws:iam::123456789012:role/S3Access"
-  }
+  #     notification_target_arn = "arn:aws:sqs:us-east-1:444455556666:queue1*"
+  #     role_arn                = "arn:aws:iam::123456789012:role/S3Access"
+  #   }
 
   tag {
-    key                 = "foo"
-    value               = "bar"
+    key                 = "name"
+    value               = "webapp-instance"
     propagate_at_launch = true
   }
 
-  timeouts {
-    delete = "15m"
-  }
+  #   timeouts {
+  #     delete = "15m"
+  #   }
 
-  tag {
-    key                 = "lorem"
-    value               = "ipsum"
-    propagate_at_launch = false
-  }
+  #   tag {
+  #     key                 = "lorem"
+  #     value               = "ipsum"
+  #     propagate_at_launch = false
+  #   }
+}
+
+resource "aws_autoscaling_attachment" "attach_autoscaler_and_loadbalancer" {
+  autoscaling_group_name = aws_autoscaling_group.autoscaler_grp.id
+  elb                    = aws_lb.lb.id
 }
 
 resource "aws_autoscaling_policy" "scale_up" {
-
-  #   policy_type = "TargetTrackingScaling"
-  #   target_tracking_configuration {
-  #     predefined_metric_specification {
-  #       predefined_metric_type = "ASGAverageCPUUtilization"
-  #     }
-  #     target_value = 3
-  #   }
   name                   = "aws-autoscaler-policy-scale-up"
   autoscaling_group_name = aws_autoscaling_group.autoscaler_grp.name
   adjustment_type        = "ChangeInCapacity"
@@ -97,7 +94,7 @@ resource "aws_cloudwatch_metric_alarm" "scale_down" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "scale_up" {
-  alarm_description   = "scale down when CPU < 3%"
+  alarm_description   = "scale up when CPU > 5%"
   alarm_actions       = [aws_autoscaling_policy.scale_up.arn]
   alarm_name          = "scale_up"
   comparison_operator = "GreaterThanThreshold"
