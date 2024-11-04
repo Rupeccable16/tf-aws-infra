@@ -13,7 +13,7 @@ resource "aws_autoscaling_group" "autoscaler_grp" {
   health_check_type         = "ELB" #Unsure what to choose here - https://aws.amazon.com/blogs/networking-and-content-delivery/choosing-the-right-health-check-with-elastic-load-balancing-and-ec2-auto-scaling/
   desired_capacity          = 1
   #   placement_group           = aws_placement_group.test.id
-  vpc_zone_identifier = [aws_subnet.public-subnet-1, aws_subnet.public-subnet-2, aws_subnet.public-subnet-3]
+  vpc_zone_identifier = [aws_subnet.public-subnet-1.id, aws_subnet.public-subnet-2.id, aws_subnet.public-subnet-3.id]
 
   launch_template {
     id = aws_launch_template.ec2_launch_template.id
@@ -56,8 +56,8 @@ resource "aws_autoscaling_group" "autoscaler_grp" {
 }
 
 resource "aws_autoscaling_attachment" "attach_autoscaler_and_loadbalancer" {
-  autoscaling_group_name = aws_autoscaling_group.autoscaler_grp.id
-  elb                    = aws_lb.lb.id
+  autoscaling_group_name = aws_autoscaling_group.autoscaler_grp.name
+  lb_target_group_arn = aws_lb_target_group.lb_target_grp.arn
 }
 
 resource "aws_autoscaling_policy" "scale_up" {
