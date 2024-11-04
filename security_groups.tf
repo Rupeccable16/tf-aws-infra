@@ -10,20 +10,20 @@ resource "aws_security_group" "application_security_group" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "allow_ssh_from_loadbalancer" {
-  depends_on = [ aws_security_group.load_balancer_security_group ]
-  security_group_id = aws_security_group.application_security_group.id
+  depends_on                   = [aws_security_group.load_balancer_security_group]
+  security_group_id            = aws_security_group.application_security_group.id
   referenced_security_group_id = aws_security_group.load_balancer_security_group.id
-  ip_protocol       = var.ip_protocol_1
-  from_port         = var.ssh_port
-  to_port           = var.ssh_port
+  ip_protocol                  = var.ip_protocol_1
+  from_port                    = var.ssh_port
+  to_port                      = var.ssh_port
 }
 
 resource "aws_vpc_security_group_ingress_rule" "allow_webapp_from_loadbalancer" {
-  security_group_id = aws_security_group.application_security_group.id
+  security_group_id            = aws_security_group.application_security_group.id
   referenced_security_group_id = aws_security_group.load_balancer_security_group.id
-  ip_protocol       = var.ip_protocol_1
-  from_port         = var.webapp_port
-  to_port           = var.webapp_port
+  ip_protocol                  = var.ip_protocol_1
+  from_port                    = var.webapp_port
+  to_port                      = var.webapp_port
 }
 
 #Restricting access to webapp directly from internet, hence commented the code below
@@ -80,8 +80,8 @@ resource "aws_vpc_security_group_ingress_rule" "allow-webapp-to-rds" {
 
 resource "aws_security_group" "load_balancer_security_group" {
   depends_on  = [aws_vpc.csye6225_vpc]
-  name        = var.aws_sg_loadbalancer_name1  
-  description = var.aws_sg_loadbalancer_description   
+  name        = var.aws_sg_loadbalancer_name1
+  description = var.aws_sg_loadbalancer_description
   vpc_id      = aws_vpc.csye6225_vpc.id
 
   tags = {
@@ -92,16 +92,16 @@ resource "aws_security_group" "load_balancer_security_group" {
 
 resource "aws_vpc_security_group_ingress_rule" "allow-internet-to-loadbalancer_port1" {
   security_group_id = aws_security_group.load_balancer_security_group.id
-  cidr_ipv4 = var.internet_cidr
-  from_port = 80
-  to_port = 80
-  ip_protocol = var.ip_protocol_1
+  cidr_ipv4         = var.internet_cidr
+  from_port         = 80
+  to_port           = 80
+  ip_protocol       = var.ip_protocol_1
 }
 
 resource "aws_vpc_security_group_ingress_rule" "allow-internet-to-loadbalancer_port2" {
   security_group_id = aws_security_group.load_balancer_security_group.id
-  cidr_ipv4 = var.internet_cidr
-  from_port = 443
-  to_port = 443
-  ip_protocol = var.ip_protocol_1
+  cidr_ipv4         = var.internet_cidr
+  from_port         = 443
+  to_port           = 443
+  ip_protocol       = var.ip_protocol_1
 }

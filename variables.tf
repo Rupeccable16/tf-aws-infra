@@ -364,15 +364,15 @@ variable "aws_route53_demo_subdomain_record_ttl" {
 
 variable "aws_sg_loadbalancer_name1" {
   type        = string
-  description = ""  
+  description = ""
 }
 
 variable "aws_sg_loadbalancer_description" {
   type        = string
-  description = ""  
+  description = ""
 }
 
 variable "aws_sg_loadbalancer_name2" {
   type        = string
-  description = ""  
+  description = ""
 }
