@@ -23,19 +23,19 @@ resource "aws_lb_listener" "lb_listener" {
 }
 
 resource "aws_lb_target_group" "lb_target_grp" {
-  name     = "lb-target-grp"
-  port     = 5000
-  protocol = "HTTP"
-  vpc_id   = aws_vpc.csye6225_vpc.id
+  name       = "lb-target-grp"
+  port       = 5000
+  protocol   = "HTTP"
+  vpc_id     = aws_vpc.csye6225_vpc.id
+  slow_start = 200
 
   health_check {
     path                = "/healthz"
-    protocol            = "HTTP"
     matcher             = "200"
-    interval            = 30
-    timeout             = 5
-    healthy_threshold   = 2
-    unhealthy_threshold = 2
+    interval            = 60
+    timeout             = 20
+    healthy_threshold   = 3
+    unhealthy_threshold = 3
   }
 
   tags = {

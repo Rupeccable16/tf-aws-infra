@@ -84,7 +84,7 @@ resource "aws_cloudwatch_metric_alarm" "scale_down" {
   comparison_operator = "LessThanOrEqualToThreshold"
   namespace           = "AWS/EC2"
   metric_name         = "CPUUtilization"
-  threshold           = "3"
+  threshold           = "12"
   evaluation_periods  = "1"
   period              = "60"
   statistic           = "Average"
@@ -101,7 +101,7 @@ resource "aws_cloudwatch_metric_alarm" "scale_up" {
   comparison_operator = "GreaterThanThreshold"
   namespace           = "AWS/EC2"
   metric_name         = "CPUUtilization"
-  threshold           = "5"
+  threshold           = "22"
   evaluation_periods  = "1"  #no of eval periods. Performs scale up when the avg cpu util is > than threshold for one 60 second long period. (can be kept to x periods of y duration)
   period              = "60" #eval periods duration
   statistic           = "Average"

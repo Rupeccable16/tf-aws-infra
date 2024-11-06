@@ -7,6 +7,20 @@ data "aws_ami" "latest_ami" {
   }
 }
 
+data "template_file" "userdata" {
+  template = file("./userdata.sh")
+
+  vars = {
+    PSQL_HOST       = aws_db_instance.my-db.address
+    PSQL_USER       = var.aws_rds_username
+    PSQL_PASS       = var.aws_rds_password
+    PSQL_DBNAME     = var.aws_rds_db_name
+    PSQL_PORT       = var.webapp_port
+    AWS_BUCKET_NAME = aws_s3_bucket.example.id
+    AWS_REGION      = var.region
+  }
+}
+
 resource "aws_iam_instance_profile" "ec2_instance_profile" {
   name = var.aws_iam_instance_profile_name
   role = aws_iam_role.ec2_role.name
@@ -144,5 +158,5 @@ resource "aws_launch_template" "ec2_launch_template" {
     }
   }
 
-  user_data = filebase64("./userdata.sh")
+  user_data = base64encode(data.template_file.userdata.rendered)
 }

@@ -26,6 +26,16 @@ resource "aws_vpc_security_group_ingress_rule" "allow_webapp_from_loadbalancer" 
   to_port                      = var.webapp_port
 }
 
+resource "aws_vpc_security_group_ingress_rule" "allow_ssh_from_internet" {
+  # depends_on                   = [aws_security_group.load_balancer_security_group]
+  security_group_id = aws_security_group.application_security_group.id
+  # referenced_security_group_id = aws_security_group.load_balancer_security_group.id
+  ip_protocol = var.ip_protocol_1
+  from_port   = var.ssh_port
+  to_port     = var.ssh_port
+  cidr_ipv4   = var.internet_cidr
+}
+
 #Restricting access to webapp directly from internet, hence commented the code below
 # resource "aws_vpc_security_group_ingress_rule" "allow-https" {
 #   security_group_id = aws_security_group.application_security_group.id
@@ -44,11 +54,11 @@ resource "aws_vpc_security_group_ingress_rule" "allow_webapp_from_loadbalancer" 
 # }
 
 #Commenting this as my webapp can communicate within the same vpc w/o explicit egress rule
-# resource "aws_vpc_security_group_egress_rule" "allow_outbound_traffic" {
-#   security_group_id = aws_security_group.application_security_group.id
-#   cidr_ipv4         = var.internet_cidr
-#   ip_protocol       = var.ip_protocol_2
-# }
+resource "aws_vpc_security_group_egress_rule" "allow_outbound_traffic" {
+  security_group_id = aws_security_group.application_security_group.id
+  cidr_ipv4         = var.internet_cidr
+  ip_protocol       = var.ip_protocol_2
+}
 
 resource "aws_security_group" "database_security_group" {
   depends_on  = [aws_vpc.csye6225_vpc]
@@ -72,11 +82,11 @@ resource "aws_vpc_security_group_ingress_rule" "allow-webapp-to-rds" {
 }
 
 #Commenting this as my rds can communicate within the same vpc, and thus can talk to the webapp
-# resource "aws_vpc_security_group_egress_rule" "allow-rds-out" {
-#   security_group_id = aws_security_group.database_security_group.id
-#   cidr_ipv4         = var.internet_cidr
-#   ip_protocol       = var.ip_protocol_2
-# }
+resource "aws_vpc_security_group_egress_rule" "allow-rds-out" {
+  security_group_id = aws_security_group.database_security_group.id
+  cidr_ipv4         = var.internet_cidr
+  ip_protocol       = var.ip_protocol_2
+}
 
 resource "aws_security_group" "load_balancer_security_group" {
   depends_on  = [aws_vpc.csye6225_vpc]
@@ -104,4 +114,10 @@ resource "aws_vpc_security_group_ingress_rule" "allow-internet-to-loadbalancer_p
   from_port         = 443
   to_port           = 443
   ip_protocol       = var.ip_protocol_1
+}
+
+resource "aws_vpc_security_group_egress_rule" "allow_loadbalancer_out" {
+  security_group_id = aws_security_group.load_balancer_security_group.id
+  cidr_ipv4         = var.internet_cidr
+  ip_protocol       = var.ip_protocol_2
 }

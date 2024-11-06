@@ -6,13 +6,13 @@ cd /opt/
 touch .env
 
 echo "Fetching db details"
-PSQL_HOST="${aws_db_instance.my-db.address}" 
-PSQL_USER="${var.aws_rds_username}"  
-PSQL_PASS="${var.aws_rds_password}"  
-PSQL_DBNAME="${var.aws_rds_db_name}" 
-PSQL_PORT="${var.webapp_port}"
-AWS_BUCKET_NAME="${aws_s3_bucket.example.id}"
-AWS_REGION="${var.region}"
+PSQL_HOST="${PSQL_HOST}" 
+PSQL_USER="${PSQL_USER}"  
+PSQL_PASS="${PSQL_PASS}"  
+PSQL_DBNAME="${PSQL_DBNAME}" 
+PSQL_PORT="${PSQL_PORT}"
+AWS_BUCKET_NAME="${AWS_BUCKET_NAME}"
+AWS_REGION="${AWS_REGION}"
 
 echo "Writing to .env"
 {
