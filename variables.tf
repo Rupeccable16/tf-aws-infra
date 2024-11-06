@@ -376,3 +376,178 @@ variable "aws_sg_loadbalancer_name2" {
   type        = string
   description = ""
 }
+
+variable "aws_asg_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_max_size" {
+  type        = number
+  description = ""
+}
+
+variable "aws_asg_min_size" {
+  type        = number
+  description = ""
+}
+
+variable "aws_asg_healthcheck_grace_period" {
+  type        = number
+  description = ""
+}
+
+variable "aws_asg_default_instance_warmup" {
+  type        = number
+  description = ""
+}
+
+variable "aws_asg_healthcheck_type" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_desired_capacity" {
+  type        = number
+  description = ""
+}
+
+variable "aws_asg_tag_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_tag_value" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_scaleup_policy_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_scaleup_policy_adjtype" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_scaleup_policy_scaleadj" {
+  type        = number
+  description = ""
+}
+
+variable "aws_asg_scaleup_policy_cooldown" {
+  type        = number
+  description = ""
+}
+
+variable "aws_asg_scaledown_policy_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_scaledown_policy_adjtype" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_scaledown_policy_scaleadj" {
+  type        = number
+  description = ""
+}
+
+variable "aws_asg_scaledown_policy_cooldown" {
+  type        = number
+  description = ""
+}
+
+variable "aws_asg_cw_scaledown_alarm_description" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaledown_alarm_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaledown_alarm_comp_operator" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaledown_alarm_namespace" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaledown_alarm_metric_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaledown_alarm_metric_threshold" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaledown_alarm_metric_evalperiods" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaledown_alarm_metric_period" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaledown_alarm_metric_statistic" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaleup_alarm_description" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaleup_alarm_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaleup_alarm_comp_operator" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaleup_alarm_namespace" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaleup_alarm_metric_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaleup_alarm_metric_threshold" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaleup_alarm_metric_evalperiods" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaleup_alarm_metric_period" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaleup_alarm_metric_statistic" {
+  type        = string
+  description = ""
+}
