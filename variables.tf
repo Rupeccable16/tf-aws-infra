@@ -551,3 +551,89 @@ variable "aws_asg_cw_scaleup_alarm_metric_statistic" {
   type        = string
   description = ""
 }
+
+variable "aws_lb_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lb_type" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lb_tag_env" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lb_listener_port" {
+  type        = number
+  description = ""
+}
+
+variable "aws_lb_listener_protocol" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lb_listener_default_action_type" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lb_targetgrp_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lb_targetgrp_port" {
+  type        = number
+  description = ""
+}
+
+variable "aws_lb_targetgrp_protocol" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lb_targetgrp_slowstart" {
+  type        = number
+  description = ""
+}
+
+variable "aws_lb_targetgrp_health_path" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lb_targetgrp_health_matcher" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lb_targetgrp_health_interval" {
+  type        = number
+  description = ""
+}
+
+variable "aws_lb_targetgrp_health_timeout" {
+  type        = number
+  description = ""
+}
+
+variable "aws_lb_targetgrp_health_healthy_threshold" {
+  type        = number
+  description = ""
+}
+
+variable "aws_lb_targetgrp_health_unhealthy_threshold" {
+  type        = number
+  description = ""
+}
+
+variable "aws_lb_targetgrp_tag_name" {
+  type        = string
+  description = ""
+}
+
