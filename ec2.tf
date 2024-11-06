@@ -110,13 +110,13 @@ resource "aws_iam_instance_profile" "ec2_instance_profile" {
 #Refer previous AMI and then above ec2 template. Other info not required
 resource "aws_launch_template" "ec2_launch_template" {
   depends_on = [aws_vpc.csye6225_vpc, aws_s3_bucket.example]
-  name       = "ec2-launch-template"
+  name       = var.aws_launch_template_name
 
   block_device_mappings {
-    device_name = "/dev/sda1" #root block, same in AMI
+    device_name = var.aws_launch_template_block_device_name #root block, same in AMI
     ebs {
-      volume_size           = "8"
-      volume_type           = "gp2"
+      volume_size           = var.aws_launch_template_ebs_vol_size
+      volume_type           = var.aws_launch_template_ebs_vol_type
       delete_on_termination = true
     }
   }
@@ -128,7 +128,7 @@ resource "aws_launch_template" "ec2_launch_template" {
 
   image_id = data.aws_ami.latest_ami.id
 
-  instance_initiated_shutdown_behavior = "terminate"
+  instance_initiated_shutdown_behavior = var.aws_launch_template_shutdown_behavior
 
 
   instance_type = var.aws_instance_type
@@ -151,10 +151,10 @@ resource "aws_launch_template" "ec2_launch_template" {
   # vpc_security_group_ids = [aws_security_group.application_security_group.id]
 
   tag_specifications {
-    resource_type = "instance"
+    resource_type = var.aws_launch_template_tag_resource_type
 
     tags = {
-      Name = "instance"
+      Name = var.aws_launch_template_tag_resource_type
     }
   }
 

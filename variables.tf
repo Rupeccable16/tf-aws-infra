@@ -637,3 +637,42 @@ variable "aws_lb_targetgrp_tag_name" {
   description = ""
 }
 
+variable "aws_lb_sg_ingress_port1" {
+  type        = number
+  description = ""
+}
+
+variable "aws_lb_sg_ingress_port2" {
+  type        = number
+  description = ""
+}
+
+variable "aws_launch_template_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_launch_template_block_device_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_launch_template_ebs_vol_size" {
+  type        = string
+  description = ""
+}
+
+variable "aws_launch_template_ebs_vol_type" {
+  type        = string
+  description = ""
+}
+
+variable "aws_launch_template_shutdown_behavior" {
+  type        = string
+  description = ""
+}
+
+variable "aws_launch_template_tag_resource_type" {
+  type        = string
+  description = ""
+}
