@@ -361,3 +361,318 @@ variable "aws_route53_demo_subdomain_record_ttl" {
   type        = number
   description = ""
 }
+
+variable "aws_sg_loadbalancer_name1" {
+  type        = string
+  description = ""
+}
+
+variable "aws_sg_loadbalancer_description" {
+  type        = string
+  description = ""
+}
+
+variable "aws_sg_loadbalancer_name2" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_max_size" {
+  type        = number
+  description = ""
+}
+
+variable "aws_asg_min_size" {
+  type        = number
+  description = ""
+}
+
+variable "aws_asg_healthcheck_grace_period" {
+  type        = number
+  description = ""
+}
+
+variable "aws_asg_default_instance_warmup" {
+  type        = number
+  description = ""
+}
+
+variable "aws_asg_healthcheck_type" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_desired_capacity" {
+  type        = number
+  description = ""
+}
+
+variable "aws_asg_tag_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_tag_value" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_scaleup_policy_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_scaleup_policy_adjtype" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_scaleup_policy_scaleadj" {
+  type        = number
+  description = ""
+}
+
+variable "aws_asg_scaleup_policy_cooldown" {
+  type        = number
+  description = ""
+}
+
+variable "aws_asg_scaledown_policy_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_scaledown_policy_adjtype" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_scaledown_policy_scaleadj" {
+  type        = number
+  description = ""
+}
+
+variable "aws_asg_scaledown_policy_cooldown" {
+  type        = number
+  description = ""
+}
+
+variable "aws_asg_cw_scaledown_alarm_description" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaledown_alarm_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaledown_alarm_comp_operator" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaledown_alarm_namespace" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaledown_alarm_metric_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaledown_alarm_metric_threshold" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaledown_alarm_metric_evalperiods" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaledown_alarm_metric_period" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaledown_alarm_metric_statistic" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaleup_alarm_description" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaleup_alarm_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaleup_alarm_comp_operator" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaleup_alarm_namespace" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaleup_alarm_metric_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaleup_alarm_metric_threshold" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaleup_alarm_metric_evalperiods" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaleup_alarm_metric_period" {
+  type        = string
+  description = ""
+}
+
+variable "aws_asg_cw_scaleup_alarm_metric_statistic" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lb_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lb_type" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lb_tag_env" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lb_listener_port" {
+  type        = number
+  description = ""
+}
+
+variable "aws_lb_listener_protocol" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lb_listener_default_action_type" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lb_targetgrp_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lb_targetgrp_port" {
+  type        = number
+  description = ""
+}
+
+variable "aws_lb_targetgrp_protocol" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lb_targetgrp_slowstart" {
+  type        = number
+  description = ""
+}
+
+variable "aws_lb_targetgrp_health_path" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lb_targetgrp_health_matcher" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lb_targetgrp_health_interval" {
+  type        = number
+  description = ""
+}
+
+variable "aws_lb_targetgrp_health_timeout" {
+  type        = number
+  description = ""
+}
+
+variable "aws_lb_targetgrp_health_healthy_threshold" {
+  type        = number
+  description = ""
+}
+
+variable "aws_lb_targetgrp_health_unhealthy_threshold" {
+  type        = number
+  description = ""
+}
+
+variable "aws_lb_targetgrp_tag_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lb_sg_ingress_port1" {
+  type        = number
+  description = ""
+}
+
+variable "aws_lb_sg_ingress_port2" {
+  type        = number
+  description = ""
+}
+
+variable "aws_launch_template_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_launch_template_block_device_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_launch_template_ebs_vol_size" {
+  type        = string
+  description = ""
+}
+
+variable "aws_launch_template_ebs_vol_type" {
+  type        = string
+  description = ""
+}
+
+variable "aws_launch_template_shutdown_behavior" {
+  type        = string
+  description = ""
+}
+
+variable "aws_launch_template_tag_resource_type" {
+  type        = string
+  description = ""
+}

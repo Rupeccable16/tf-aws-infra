@@ -12,12 +12,17 @@ data "aws_route53_zone" "curr_acc_zone" {
 }
 
 resource "aws_route53_record" "demo_subdomain" {
-  depends_on = [aws_instance.my-ec2]
+  depends_on = [aws_lb.lb] #Change to point at loadbalancer?
   zone_id    = var.aws_route53_demo_acc_zone_id
   name       = var.aws_route53_demo_subdomain_name
   type       = var.aws_route53_demo_subdomain_record_type
-  ttl        = var.aws_route53_demo_subdomain_record_ttl
-  records    = [aws_instance.my-ec2.public_ip]
+  //ttl        = var.aws_route53_demo_subdomain_record_ttl
+  //records    = [aws_instance.my-ec2.public_ip] #Change to point at loadbalancer?
 
+  alias {
+    zone_id                = aws_lb.lb.zone_id
+    name                   = aws_lb.lb.dns_name
+    evaluate_target_health = true
+  }
 
 }
