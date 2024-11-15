@@ -115,6 +115,22 @@ resource "aws_vpc_security_group_ingress_rule" "allow-internet-to-loadbalancer_p
   ip_protocol       = var.ip_protocol_1
 }
 
+resource "aws_vpc_security_group_ingress_rule" "allow-internet-ipv6-to-loadbalancer_port1" {
+  security_group_id = aws_security_group.load_balancer_security_group.id
+  cidr_ipv6         = var.internet_cidr_ipv6
+  from_port         = var.aws_lb_sg_ingress_port1
+  to_port           = var.aws_lb_sg_ingress_port1
+  ip_protocol       = var.ip_protocol_1
+}
+
+resource "aws_vpc_security_group_ingress_rule" "allow-internet-ipv6-to-loadbalancer_port2" {
+  security_group_id = aws_security_group.load_balancer_security_group.id
+  cidr_ipv6         = var.internet_cidr_ipv6
+  from_port         = var.aws_lb_sg_ingress_port2
+  to_port           = var.aws_lb_sg_ingress_port2
+  ip_protocol       = var.ip_protocol_1
+}
+
 resource "aws_vpc_security_group_egress_rule" "allow_loadbalancer_out" {
   security_group_id = aws_security_group.load_balancer_security_group.id
   cidr_ipv4         = var.internet_cidr

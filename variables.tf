@@ -82,6 +82,10 @@ variable "internet_cidr" {
   description = ""
 }
 
+variable "internet_cidr_ipv6" {
+  type        = string
+  description = ""
+}
 variable "public_subnet_1_name" {
   type        = string
   description = ""
