@@ -1,18 +1,18 @@
 resource "aws_lambda_function" "my_lambda" {
   depends_on    = [aws_sns_topic.user_updates, aws_db_instance.my-db]
   function_name = "my-lambda-function"
-  handler       = "index.handler" 
-  runtime       = "nodejs20.x"    
+  handler       = "index.handler"
+  runtime       = "nodejs20.x"
   role          = aws_iam_role.lambda_role.arn
   s3_bucket     = "serverless-test-rupesh"
   s3_key        = "code3.zip"
   #source_code_hash = filebase64sha256("lambda-function.zip") # Ensures new uploads trigger updates
-  timeout          = 900 # in seconds
-  memory_size = 128 
+  timeout     = 900 # in seconds
+  memory_size = 128
 
   logging_config {
     log_format = "Text"
-    log_group = "webappLogs"
+    log_group  = "webappLogs"
   }
   vpc_config {
     subnet_ids         = [aws_subnet.private-subnet-1.id, aws_subnet.private-subnet-2.id, aws_subnet.private-subnet-3.id]

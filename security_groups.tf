@@ -55,9 +55,10 @@ resource "aws_vpc_security_group_ingress_rule" "allow_ssh_from_internet" {
 # }
 
 resource "aws_vpc_security_group_egress_rule" "allow_outbound_traffic" {
-  security_group_id = aws_security_group.application_security_group.id
-  cidr_ipv4         = var.internet_cidr
-  ip_protocol       = var.ip_protocol_2
+  security_group_id            = aws_security_group.application_security_group.id
+  referenced_security_group_id = aws_security_group.database_security_group.id
+  //cidr_ipv4         = var.internet_cidr
+  ip_protocol = var.ip_protocol_2
 }
 
 resource "aws_security_group" "database_security_group" {
@@ -91,9 +92,10 @@ resource "aws_vpc_security_group_ingress_rule" "allow-lambda-to-rds" {
 }
 
 resource "aws_vpc_security_group_egress_rule" "allow-rds-out" {
-  security_group_id = aws_security_group.database_security_group.id
-  cidr_ipv4         = var.internet_cidr
-  ip_protocol       = var.ip_protocol_2
+  security_group_id            = aws_security_group.database_security_group.id
+  referenced_security_group_id = aws_security_group.application_security_group.id
+  //cidr_ipv4         = var.internet_cidr
+  ip_protocol = var.ip_protocol_2
 }
 
 resource "aws_security_group" "load_balancer_security_group" {
@@ -141,9 +143,10 @@ resource "aws_vpc_security_group_ingress_rule" "allow-internet-ipv6-to-loadbalan
 }
 
 resource "aws_vpc_security_group_egress_rule" "allow_loadbalancer_out" {
-  security_group_id = aws_security_group.load_balancer_security_group.id
-  cidr_ipv4         = var.internet_cidr
-  ip_protocol       = var.ip_protocol_2
+  security_group_id            = aws_security_group.load_balancer_security_group.id
+  referenced_security_group_id = [aws_security_group.application_security_group.id]
+  //cidr_ipv4         = var.internet_cidr
+  ip_protocol = var.ip_protocol_2
 }
 
 resource "aws_security_group" "lambda_security_group" {
@@ -156,4 +159,11 @@ resource "aws_security_group" "lambda_security_group" {
     Name = "lambda-security-group" #var.aws_sg_rds_name2
   }
 
+}
+
+resource "aws_vpc_security_group_egress_rule" "allow_lambda_out" {
+  security_group_id = aws_security_group.lambda_security_group.id
+  cidr_ipv4         = var.internet_cidr
+  cidr_ipv6         = var.internet_cidr_ipv6
+  ip_protocol       = var.ip_protocol_2
 }
