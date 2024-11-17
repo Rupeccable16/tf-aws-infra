@@ -55,9 +55,9 @@ resource "aws_vpc_security_group_ingress_rule" "allow_ssh_from_internet" {
 # }
 
 resource "aws_vpc_security_group_egress_rule" "allow_outbound_traffic" {
-  security_group_id            = aws_security_group.application_security_group.id
-  referenced_security_group_id = aws_security_group.database_security_group.id
-  //cidr_ipv4         = var.internet_cidr
+  security_group_id = aws_security_group.application_security_group.id
+  //referenced_security_group_id = aws_security_group.database_security_group.id
+  cidr_ipv4   = var.internet_cidr
   ip_protocol = var.ip_protocol_2
 }
 
@@ -144,7 +144,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow-internet-ipv6-to-loadbalan
 
 resource "aws_vpc_security_group_egress_rule" "allow_loadbalancer_out" {
   security_group_id            = aws_security_group.load_balancer_security_group.id
-  referenced_security_group_id = [aws_security_group.application_security_group.id]
+  referenced_security_group_id = aws_security_group.application_security_group.id
   //cidr_ipv4         = var.internet_cidr
   ip_protocol = var.ip_protocol_2
 }
@@ -161,9 +161,14 @@ resource "aws_security_group" "lambda_security_group" {
 
 }
 
-resource "aws_vpc_security_group_egress_rule" "allow_lambda_out" {
+resource "aws_vpc_security_group_egress_rule" "allow_lambda_out1" {
   security_group_id = aws_security_group.lambda_security_group.id
   cidr_ipv4         = var.internet_cidr
+  ip_protocol       = var.ip_protocol_2
+}
+
+resource "aws_vpc_security_group_egress_rule" "allow_lambda_out2" {
+  security_group_id = aws_security_group.lambda_security_group.id
   cidr_ipv6         = var.internet_cidr_ipv6
   ip_protocol       = var.ip_protocol_2
 }

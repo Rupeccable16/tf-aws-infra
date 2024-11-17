@@ -680,3 +680,8 @@ variable "aws_launch_template_tag_resource_type" {
   type        = string
   description = ""
 }
+
+variable "send_grip_api_key" {
+  type        = string
+  description = ""
+}

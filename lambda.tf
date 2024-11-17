@@ -1,11 +1,11 @@
 resource "aws_lambda_function" "my_lambda" {
-  depends_on    = [aws_sns_topic.user_updates, aws_db_instance.my-db]
+  depends_on    = [aws_sns_topic.user_updates, aws_db_instance.my-db, aws_vpc.csye6225_vpc]
   function_name = "my-lambda-function"
   handler       = "index.handler"
   runtime       = "nodejs20.x"
   role          = aws_iam_role.lambda_role.arn
   s3_bucket     = "serverless-test-rupesh"
-  s3_key        = "code3.zip"
+  s3_key        = "code4.zip"
   #source_code_hash = filebase64sha256("lambda-function.zip") # Ensures new uploads trigger updates
   timeout     = 900 # in seconds
   memory_size = 128
@@ -21,10 +21,11 @@ resource "aws_lambda_function" "my_lambda" {
 
   environment {
     variables = {
-      DB_NAME     = "${var.aws_rds_db_name}",
-      DB_USER     = "${var.aws_rds_username}",
-      DB_PASSWORD = "${var.aws_rds_password}",
-      DB_HOST     = "${aws_db_instance.my-db.address}"
+      DB_NAME          = "${var.aws_rds_db_name}",
+      DB_USER          = "${var.aws_rds_username}",
+      DB_PASSWORD      = "${var.aws_rds_password}",
+      DB_HOST          = "${aws_db_instance.my-db.address}"
+      SENDGRID_API_KEY = "${var.send_grip_api_key}"
     }
   }
 }

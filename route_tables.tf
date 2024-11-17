@@ -17,10 +17,10 @@ resource "aws_route_table" "private_subnet_route_table" {
   vpc_id     = aws_vpc.csye6225_vpc.id
 
   route {
-    cidr_block      = var.internet_cidr
-    ipv6_cidr_block = var.internet_cidr_ipv6
-    nat_gateway_id  = aws_nat_gateway.nat_pub_1.id
+    cidr_block     = var.internet_cidr
+    nat_gateway_id = aws_nat_gateway.nat_pub_1.id
   }
+
 
   tags = {
     Name = var.private_route_table_name
