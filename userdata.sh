@@ -14,6 +14,7 @@ PSQL_PORT="${PSQL_PORT}"
 AWS_BUCKET_NAME="${AWS_BUCKET_NAME}"
 AWS_REGION="${AWS_REGION}"
 TOPIC_ARN="${TOPIC_ARN}"
+APP_DOMAIN="${APP_DOMAIN}"
 
 echo "Writing to .env"
 {
@@ -26,6 +27,7 @@ echo "Writing to .env"
   echo "AWS_REGION=\"$AWS_REGION\""
   echo "ENVIRONMENT=PROD"
   echo "TOPIC_ARN=\"$TOPIC_ARN\""
+  echo "APP_DOMAIN=\"$APP_DOMAIN\""
 
 } >> .env
 
