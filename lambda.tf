@@ -14,10 +14,10 @@ resource "aws_lambda_function" "my_lambda" {
     log_format = var.aws_lambda_function_log_format
     log_group  = var.aws_lambda_function_log_group
   }
-  vpc_config {
-    subnet_ids         = [aws_subnet.private-subnet-1.id, aws_subnet.private-subnet-2.id, aws_subnet.private-subnet-3.id]
-    security_group_ids = [aws_security_group.lambda_security_group.id]
-  }
+  # vpc_config {
+  #   subnet_ids         = [aws_subnet.private-subnet-1.id, aws_subnet.private-subnet-2.id, aws_subnet.private-subnet-3.id]
+  #   security_group_ids = [aws_security_group.lambda_security_group.id]
+  # }
 
   environment {
     variables = {

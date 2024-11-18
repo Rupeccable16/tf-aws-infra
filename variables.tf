@@ -747,45 +747,45 @@ variable "aws_lambda_instace_profile_name" {
 
 variable "aws_eip_domain" {
   type        = string
-  description = ""  
+  description = ""
 }
 
 variable "aws_lambda_sg_name" {
   type        = string
-  description = ""  
+  description = ""
 }
 
 variable "aws_lambda_sg_description" {
   type        = string
-  description = ""  
+  description = ""
 }
 
 variable "aws_lambda_sg_nametag" {
   type        = string
-  description = ""  
+  description = ""
 }
 
 variable "aws_sns_topic_name" {
   type        = string
-  description = ""  
+  description = ""
 }
 
 variable "aws_sns_lambda_permissions_statementID" {
   type        = string
-  description = ""  
+  description = ""
 }
 
 variable "aws_sns_lambda_permissions_action" {
   type        = string
-  description = ""  
+  description = ""
 }
 
 variable "aws_sns_lambda_permissions_principal" {
   type        = string
-  description = ""  
+  description = ""
 }
 
 variable "aws_sns_lambda_subscription_protocol" {
   type        = string
-  description = ""  
+  description = ""
 }

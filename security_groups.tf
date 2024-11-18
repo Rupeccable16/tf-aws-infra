@@ -151,12 +151,12 @@ resource "aws_vpc_security_group_egress_rule" "allow_loadbalancer_out" {
 
 resource "aws_security_group" "lambda_security_group" {
   depends_on  = [aws_vpc.csye6225_vpc]
-  name        = var.aws_lambda_sg_name     #var.aws_sg_rds_name1
+  name        = var.aws_lambda_sg_name        #var.aws_sg_rds_name1
   description = var.aws_lambda_sg_description #var.aws_sg_rds_description
   vpc_id      = aws_vpc.csye6225_vpc.id
 
   tags = {
-    Name =  var.aws_lambda_sg_nametag
+    Name = var.aws_lambda_sg_nametag
   }
 
 }

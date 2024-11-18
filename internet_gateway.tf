@@ -6,11 +6,11 @@ resource "aws_internet_gateway" "gw" {
   }
 }
 
-resource "aws_eip" "eip1" {
-  domain = var.aws_eip_domain
-}
+# resource "aws_eip" "eip1" {
+#   domain = var.aws_eip_domain
+# }
 
-resource "aws_nat_gateway" "nat_pub_1" {
-  allocation_id = aws_eip.eip1.allocation_id
-  subnet_id     = aws_subnet.public-subnet-1.id
-}
+# resource "aws_nat_gateway" "nat_pub_1" {
+#   allocation_id = aws_eip.eip1.allocation_id
+#   subnet_id     = aws_subnet.public-subnet-1.id
+# }
