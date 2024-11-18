@@ -18,6 +18,8 @@ data "template_file" "userdata" {
     PSQL_PORT       = var.webapp_port
     AWS_BUCKET_NAME = aws_s3_bucket.example.id
     AWS_REGION      = var.region
+    TOPIC_ARN       = aws_sns_topic.user_updates.arn
+    APP_DOMAIN      = var.aws_route53_demo_subdomain_name
   }
 }
 

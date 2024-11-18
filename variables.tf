@@ -82,6 +82,10 @@ variable "internet_cidr" {
   description = ""
 }
 
+variable "internet_cidr_ipv6" {
+  type        = string
+  description = ""
+}
 variable "public_subnet_1_name" {
   type        = string
   description = ""
@@ -673,6 +677,115 @@ variable "aws_launch_template_shutdown_behavior" {
 }
 
 variable "aws_launch_template_tag_resource_type" {
+  type        = string
+  description = ""
+}
+
+variable "send_grip_api_key" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lambda_function_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lambda_function_handler" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lambda_function_runtime" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lambda_function_s3bucket" {
+  type        = string
+  description = ""
+}
+variable "aws_lambda_function_s3key" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lambda_function_timeout" {
+  type        = number
+  description = ""
+}
+
+variable "aws_lambda_function_memory" {
+  type        = number
+  description = ""
+}
+
+variable "aws_lambda_function_log_format" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lambda_function_log_group" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lambda_role_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lambda_policy_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lambda_instace_profile_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_eip_domain" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lambda_sg_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lambda_sg_description" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lambda_sg_nametag" {
+  type        = string
+  description = ""
+}
+
+variable "aws_sns_topic_name" {
+  type        = string
+  description = ""
+}
+
+variable "aws_sns_lambda_permissions_statementID" {
+  type        = string
+  description = ""
+}
+
+variable "aws_sns_lambda_permissions_action" {
+  type        = string
+  description = ""
+}
+
+variable "aws_sns_lambda_permissions_principal" {
+  type        = string
+  description = ""
+}
+
+variable "aws_sns_lambda_subscription_protocol" {
   type        = string
   description = ""
 }
