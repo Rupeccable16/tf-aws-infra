@@ -7,7 +7,7 @@ resource "aws_internet_gateway" "gw" {
 }
 
 resource "aws_eip" "eip1" {
-  domain = "vpc"
+  domain = var.aws_eip_domain
 }
 
 resource "aws_nat_gateway" "nat_pub_1" {

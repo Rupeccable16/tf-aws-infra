@@ -27,15 +27,15 @@ resource "aws_vpc_security_group_ingress_rule" "allow_webapp_from_loadbalancer" 
 }
 
 # Uncomment this to enable ssh from internet
-resource "aws_vpc_security_group_ingress_rule" "allow_ssh_from_internet" {
-  # depends_on                   = [aws_security_group.load_balancer_security_group]
-  security_group_id = aws_security_group.application_security_group.id
-  # referenced_security_group_id = aws_security_group.load_balancer_security_group.id
-  ip_protocol = var.ip_protocol_1
-  from_port   = var.ssh_port
-  to_port     = var.ssh_port
-  cidr_ipv4   = var.internet_cidr
-}
+# resource "aws_vpc_security_group_ingress_rule" "allow_ssh_from_internet" {
+#   # depends_on                   = [aws_security_group.load_balancer_security_group]
+#   security_group_id = aws_security_group.application_security_group.id
+#   # referenced_security_group_id = aws_security_group.load_balancer_security_group.id
+#   ip_protocol = var.ip_protocol_1
+#   from_port   = var.ssh_port
+#   to_port     = var.ssh_port
+#   cidr_ipv4   = var.internet_cidr
+# }
 
 #Restricting access to webapp directly from internet, hence commented the code below
 # resource "aws_vpc_security_group_ingress_rule" "allow-https" {
@@ -151,12 +151,12 @@ resource "aws_vpc_security_group_egress_rule" "allow_loadbalancer_out" {
 
 resource "aws_security_group" "lambda_security_group" {
   depends_on  = [aws_vpc.csye6225_vpc]
-  name        = "lambda security group"     #var.aws_sg_rds_name1
-  description = "Security group for lambda" #var.aws_sg_rds_description
+  name        = var.aws_lambda_sg_name     #var.aws_sg_rds_name1
+  description = var.aws_lambda_sg_description #var.aws_sg_rds_description
   vpc_id      = aws_vpc.csye6225_vpc.id
 
   tags = {
-    Name = "lambda-security-group" #var.aws_sg_rds_name2
+    Name =  var.aws_lambda_sg_nametag
   }
 
 }
