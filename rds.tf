@@ -29,5 +29,5 @@ resource "aws_db_instance" "my-db" {
   skip_final_snapshot  = true
 
   storage_encrypted = true
-  kms_key_id = aws_kms_key.rds_kms_key.id
+  kms_key_id        = aws_kms_key.rds_kms_key.id
 }

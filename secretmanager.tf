@@ -5,7 +5,7 @@ resource "random_password" "rds_password" {
 }
 
 resource "aws_secretsmanager_secret" "rds_secret" {
-  name = "Secret for rds password"
+  name       = "Secret for rds password"
   kms_key_id = aws_kms_key.rds_password_kms_key.id
 }
 
@@ -20,4 +20,14 @@ data "aws_secretsmanager_secret" "by-name" {
 
 data "aws_secretsmanager_secret_version" "rds_pass" {
   secret_id = data.aws_secretsmanager_secret.by-name.id
+}
+
+resource "aws_secretsmanager_secret" "sendgrid_secret" {
+  name       = "sendgrid_api_key"
+  kms_key_id = aws_kms_key.sendGrid_kms_key.id
+}
+
+resource "aws_secretsmanager_secret_version" "sendgrid" {
+  secret_id     = aws_secretsmanager_secret.rds_secret.id
+  secret_string = var.sendgrid_api_key
 }

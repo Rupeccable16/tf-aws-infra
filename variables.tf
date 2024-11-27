@@ -789,3 +789,14 @@ variable "aws_sns_lambda_subscription_protocol" {
   type        = string
   description = ""
 }
+
+variable "sendgrid_api_key" {
+  type        = string
+  description = ""
+  sensitive   = true
+}
+
+variable "aws_lambda_policy_for_secrets_name" {
+  type        = string
+  description = ""
+}

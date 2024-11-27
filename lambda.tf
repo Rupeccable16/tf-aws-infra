@@ -58,9 +58,18 @@ data "aws_iam_policy" "lambda_policy" {
   name = var.aws_lambda_policy_name #var.aws_s3_get_post_delete_list_policy_name
 }
 
+data "aws_iam_policy" "lambda_policy_for_secrets" {
+  name = var.aws_lambda_policy_for_secrets_name
+}
+
 resource "aws_iam_role_policy_attachment" "lambda-policy-attach" {
   role       = aws_iam_role.lambda_role.name
   policy_arn = data.aws_iam_policy.lambda_policy.arn
+}
+
+resource "aws_iam_role_policy_attachment" "lambda-secrets-policy-attach" {
+  role       = aws_iam_role.lambda_role.name
+  policy_arn = data.aws_iam_policy.lambda_policy_for_secrets.arn
 }
 
 
