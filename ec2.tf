@@ -13,7 +13,7 @@ data "template_file" "userdata" {
   vars = {
     PSQL_HOST       = aws_db_instance.my-db.address
     PSQL_USER       = var.aws_rds_username
-    PSQL_PASS       = var.aws_rds_password
+    PSQL_PASS       = data.aws_secretsmanager_secret_version.rds_pass.secret_string
     PSQL_DBNAME     = var.aws_rds_db_name
     PSQL_PORT       = var.webapp_port
     AWS_BUCKET_NAME = aws_s3_bucket.example.id
