@@ -7,6 +7,12 @@ resource "aws_db_subnet_group" "db-subnet-grp" {
   }
 }
 
+resource "random_password" "rds_password" {
+  length           = 16
+  special          = true
+  override_special = "!#$%&*()-_=+[]{}<>:?"
+}
+
 resource "aws_db_instance" "my-db" {
   depends_on        = [aws_vpc.csye6225_vpc] //Add ec2?
   allocated_storage = var.aws_rds_storage
@@ -18,7 +24,7 @@ resource "aws_db_instance" "my-db" {
   multi_az            = false
   identifier          = var.aws_rds_identifier
   username            = var.aws_rds_username
-  password            = var.aws_rds_password
+  password            = random_password.rds_password.result #var.aws_rds_password
   publicly_accessible = false
   db_name             = var.aws_rds_db_name
 
@@ -27,4 +33,7 @@ resource "aws_db_instance" "my-db" {
 
   parameter_group_name = var.aws_rds_parameter_grp_name
   skip_final_snapshot  = true
+
+  storage_encrypted = true
+  kms_key_id = aws_kms_key.rds_kms_key.id
 }

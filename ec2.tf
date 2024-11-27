@@ -120,6 +120,8 @@ resource "aws_launch_template" "ec2_launch_template" {
       volume_size           = var.aws_launch_template_ebs_vol_size
       volume_type           = var.aws_launch_template_ebs_vol_type
       delete_on_termination = true
+      encrypted = true
+      kms_key_id = aws_kms_key.ec2_kms_key.id
     }
   }
 
