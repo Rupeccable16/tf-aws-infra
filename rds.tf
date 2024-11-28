@@ -8,7 +8,7 @@ resource "aws_db_subnet_group" "db-subnet-grp" {
 }
 
 resource "aws_db_instance" "my-db" {
-  depends_on        = [aws_vpc.csye6225_vpc] //Add ec2?
+  depends_on        = [aws_vpc.csye6225_vpc, aws_kms_key.rds_kms_key, aws_kms_key.rds_password_kms_key] //Add ec2?
   allocated_storage = var.aws_rds_storage
 
 
@@ -29,5 +29,5 @@ resource "aws_db_instance" "my-db" {
   skip_final_snapshot  = true
 
   storage_encrypted = true
-  kms_key_id        = aws_kms_key.rds_kms_key.id
+  kms_key_id        = aws_kms_key.rds_kms_key.arn
 }
