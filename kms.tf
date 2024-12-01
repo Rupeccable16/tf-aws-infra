@@ -5,6 +5,9 @@ resource "aws_kms_key" "ec2_kms_key" {
   description             = "A symmetric encryption KMS key"
   enable_key_rotation     = true
   rotation_period_in_days = 90
+  tags = {
+    "name": "for ec2"
+  }
   policy = jsonencode({
     "Id" : "key-consolepolicy-3",
     "Version" : "2012-10-17",
@@ -47,7 +50,7 @@ resource "aws_kms_key" "ec2_kms_key" {
         "Sid" : "Allow use of the key",
         "Effect" : "Allow",
         "Principal" : {
-          "AWS" : "arn:aws:iam::209479307750:role/ec2_role"
+          "AWS" : "arn:aws:iam::209479307750:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
         },
         "Action" : [
           "kms:Encrypt",
@@ -56,20 +59,20 @@ resource "aws_kms_key" "ec2_kms_key" {
           "kms:GenerateDataKey*",
           "kms:DescribeKey"
         ],
-        "Resource" : "arn:aws:ec2:us-east-1:209479307750:instance/*"
+        "Resource" : "*"
       },
       {
         "Sid" : "Allow attachment of persistent resources",
         "Effect" : "Allow",
         "Principal" : {
-          "AWS" : "arn:aws:iam::209479307750:role/ec2_role"
+          "AWS" : "arn:aws:iam::209479307750:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
         },
         "Action" : [
           "kms:CreateGrant",
           "kms:ListGrants",
           "kms:RevokeGrant"
         ],
-        "Resource" : "arn:aws:ec2:us-east-1:209479307750:instance/*",
+        "Resource" : "*",
         "Condition" : {
           "Bool" : {
             "kms:GrantIsForAWSResource" : "true"
@@ -84,6 +87,9 @@ resource "aws_kms_key" "rds_kms_key" {
   description             = "A symmetric encryption KMS key"
   enable_key_rotation     = true
   rotation_period_in_days = 90
+  tags = {
+    "name": "for rds"
+  }
   policy = jsonencode({
     "Id" : "key-consolepolicy-3",
     "Version" : "2012-10-17",
@@ -126,7 +132,7 @@ resource "aws_kms_key" "rds_kms_key" {
         "Sid" : "Allow use of the key",
         "Effect" : "Allow",
         "Principal" : {
-          "AWS" : "*"
+          "AWS" : "*"   #arn:aws:iam::209479307750:role/aws-service-role/rds.amazonaws.com/AWSServiceRoleForRDS
         },
         "Action" : [
           "kms:Encrypt",
@@ -141,7 +147,7 @@ resource "aws_kms_key" "rds_kms_key" {
         "Sid" : "Allow attachment of persistent resources",
         "Effect" : "Allow",
         "Principal" : {
-          "AWS" : "*"
+          "AWS" : "*"  #arn:aws:iam::209479307750:role/aws-service-role/rds.amazonaws.com/AWSServiceRoleForRDS
         },
         "Action" : [
           "kms:CreateGrant",
@@ -163,6 +169,9 @@ resource "aws_kms_key" "s3_kms_key" {
   description             = "A symmetric encryption KMS key"
   enable_key_rotation     = true
   rotation_period_in_days = 90
+  tags = {
+    "name": "for s3"
+  }
   policy = jsonencode({
     "Id" : "key-consolepolicy-3",
     "Version" : "2012-10-17",
@@ -243,140 +252,161 @@ resource "aws_kms_key" "rds_password_kms_key" {
   description             = "A symmetric encryption KMS key"
   enable_key_rotation     = true
   rotation_period_in_days = 90
+  tags = {
+    "name": "for rds password"
+  }
   policy = jsonencode({
-    "Id" : "auto-secretsmanager-2",
     "Version" : "2012-10-17",
+    "Id" : "KMSSecretsManagerPolicy",
     "Statement" : [
       {
-        "Sid" : "Allow access through AWS Secrets Manager for all principals in the account that are authorized to use AWS Secrets Manager",
+        "Sid" : "AllowSecretsManagerToUseKeyForSpecificSecret",
         "Effect" : "Allow",
         "Principal" : {
-          "AWS" : [
-            "*"
-          ]
+          "Service" : "secretsmanager.amazonaws.com"
         },
         "Action" : [
-          "kms:Encrypt",
           "kms:Decrypt",
+          "kms:Encrypt",
           "kms:ReEncrypt*",
-          "kms:CreateGrant",
+          "kms:GenerateDataKey*",
           "kms:DescribeKey"
         ],
         "Resource" : "*",
         "Condition" : {
           "StringEquals" : {
             "kms:CallerAccount" : "209479307750",
-            "kms:ViaService" : "secretsmanager.us-east-1.amazonaws.com"
+            "kms:ViaService" : "secretsmanager.us-east-1.amazonaws.com",
+
           }
         }
       },
       {
-        "Sid" : "Allow access through AWS Secrets Manager for all principals in the account that are authorized to use AWS Secrets Manager",
+        "Sid" : "Enable IAM User Permissions",
         "Effect" : "Allow",
         "Principal" : {
-          "AWS" : [
-            "*"
-          ]
+          "AWS" : "arn:aws:iam::209479307750:root"
         },
-        "Action" : "kms:GenerateDataKey*",
-        "Resource" : "*",
-        "Condition" : {
-          "StringEquals" : {
-            "kms:CallerAccount" : "209479307750"
-          },
-          "StringLike" : {
-            "kms:ViaService" : "secretsmanager.us-east-1.amazonaws.com"
-          }
-        }
+        "Action" : "kms:*",
+        "Resource" : "*"
       },
       {
-        "Sid" : "Allow direct access to key metadata to the account",
+        "Sid" : "Allow access for Key Administrators",
         "Effect" : "Allow",
         "Principal" : {
-          "AWS" : [
-            "arn:aws:iam::209479307750:root"
-          ]
+          "AWS" : "arn:aws:iam::209479307750:user/awscli"
         },
         "Action" : [
+          "kms:Create*",
           "kms:Describe*",
-          "kms:Get*",
+          "kms:Enable*",
           "kms:List*",
-          "kms:RevokeGrant"
+          "kms:Put*",
+          "kms:Update*",
+          "kms:Revoke*",
+          "kms:Disable*",
+          "kms:Get*",
+          "kms:Delete*",
+          "kms:TagResource",
+          "kms:UntagResource",
+          "kms:ScheduleKeyDeletion",
+          "kms:CancelKeyDeletion",
+          "kms:RotateKeyOnDemand"
         ],
         "Resource" : "*"
-      }
+      },
+      # {
+      #     "Sid": "AllowKeyAdminAccess",
+      #     "Effect": "Allow",
+      #     "Principal": {
+      #         "AWS": "arn:aws:iam::209479307750:user/awscli"
+      #     },
+      #     "Action": "kms:*",
+      #     "Resource": "*"
+      # }
     ]
-  })
+    }
+  )
 }
 
 resource "aws_kms_key" "sendGrid_kms_key" {
   description             = "A symmetric encryption KMS key"
   enable_key_rotation     = true
   rotation_period_in_days = 90
+  tags = {
+    "name": "for sendgrid"
+  }
   policy = jsonencode({
-    "Id" : "auto-secretsmanager-2",
     "Version" : "2012-10-17",
+    "Id" : "KMSSecretsManagerPolicy",
     "Statement" : [
       {
-        "Sid" : "Allow access through AWS Secrets Manager for all principals in the account that are authorized to use AWS Secrets Manager",
+        "Sid" : "AllowSecretsManagerToUseKeyForSpecificSecret",
         "Effect" : "Allow",
         "Principal" : {
-          "AWS" : [
-            "*"
-          ]
+          "Service" : "secretsmanager.amazonaws.com"
         },
         "Action" : [
-          "kms:Encrypt",
           "kms:Decrypt",
+          "kms:Encrypt",
           "kms:ReEncrypt*",
-          "kms:CreateGrant",
+          "kms:GenerateDataKey*",
           "kms:DescribeKey"
         ],
         "Resource" : "*",
         "Condition" : {
           "StringEquals" : {
             "kms:CallerAccount" : "209479307750",
-            "kms:ViaService" : "secretsmanager.us-east-1.amazonaws.com"
+            "kms:ViaService" : "secretsmanager.us-east-1.amazonaws.com",
+
           }
         }
       },
       {
-        "Sid" : "Allow access through AWS Secrets Manager for all principals in the account that are authorized to use AWS Secrets Manager",
+        "Sid" : "Enable IAM User Permissions",
         "Effect" : "Allow",
         "Principal" : {
-          "AWS" : [
-            "*"
-          ]
+          "AWS" : "arn:aws:iam::209479307750:root"
         },
-        "Action" : "kms:GenerateDataKey*",
-        "Resource" : "*",
-        "Condition" : {
-          "StringEquals" : {
-            "kms:CallerAccount" : "209479307750"
-          },
-          "StringLike" : {
-            "kms:ViaService" : "secretsmanager.us-east-1.amazonaws.com"
-          }
-        }
+        "Action" : "kms:*",
+        "Resource" : "*"
       },
       {
-        "Sid" : "Allow direct access to key metadata to the account",
+        "Sid" : "Allow access for Key Administrators",
         "Effect" : "Allow",
         "Principal" : {
-          "AWS" : [
-            "arn:aws:iam::209479307750:root"
-          ]
+          "AWS" : "arn:aws:iam::209479307750:user/awscli"
         },
         "Action" : [
+          "kms:Create*",
           "kms:Describe*",
-          "kms:Get*",
+          "kms:Enable*",
           "kms:List*",
-          "kms:RevokeGrant"
+          "kms:Put*",
+          "kms:Update*",
+          "kms:Revoke*",
+          "kms:Disable*",
+          "kms:Get*",
+          "kms:Delete*",
+          "kms:TagResource",
+          "kms:UntagResource",
+          "kms:ScheduleKeyDeletion",
+          "kms:CancelKeyDeletion",
+          "kms:RotateKeyOnDemand"
         ],
         "Resource" : "*"
-      }
+      },
+      # {
+      #     "Sid": "AllowKeyAdminAccess",
+      #     "Effect": "Allow",
+      #     "Principal": {
+      #         "AWS": "arn:aws:iam::209479307750:user/awscli"
+      #     },
+      #     "Action": "kms:*",
+      #     "Resource": "*"
+      # }
     ]
-  })
+    })
 }
 
 # resource "aws_kms_key_policy" "ec2_kms_policy" {
