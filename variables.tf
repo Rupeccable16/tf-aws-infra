@@ -800,3 +800,13 @@ variable "aws_lambda_policy_for_secrets_name" {
   type        = string
   description = ""
 }
+
+variable "aws_lb_ssl_policy" {
+  type        = string
+  description = ""
+}
+
+variable "aws_lb_ssl_certificate_arn" {
+  type        = string
+  description = ""
+}

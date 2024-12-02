@@ -59,7 +59,7 @@ resource "aws_kms_key" "ec2_kms_key" {
           "kms:GenerateDataKey*",
           "kms:DescribeKey"
         ],
-        "Resource" : "*"
+        "Resource" : "*" #In key policies, resource = * means 'this key' 
       },
       {
         "Sid" : "Allow attachment of persistent resources",
