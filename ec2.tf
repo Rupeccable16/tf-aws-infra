@@ -13,13 +13,14 @@ data "template_file" "userdata" {
   vars = {
     PSQL_HOST       = aws_db_instance.my-db.address
     PSQL_USER       = var.aws_rds_username
-    PSQL_PASS       = var.aws_rds_password
+    PSQL_PASS       = data.aws_secretsmanager_secret_version.rds_pass.secret_string
     PSQL_DBNAME     = var.aws_rds_db_name
     PSQL_PORT       = var.webapp_port
     AWS_BUCKET_NAME = aws_s3_bucket.example.id
     AWS_REGION      = var.region
     TOPIC_ARN       = aws_sns_topic.user_updates.arn
     APP_DOMAIN      = var.aws_route53_demo_subdomain_name
+    AWS_S3_KEY      = aws_kms_key.s3_kms_key.arn
   }
 }
 
@@ -120,6 +121,8 @@ resource "aws_launch_template" "ec2_launch_template" {
       volume_size           = var.aws_launch_template_ebs_vol_size
       volume_type           = var.aws_launch_template_ebs_vol_type
       delete_on_termination = true
+      encrypted             = true
+      kms_key_id            = aws_kms_key.ec2_kms_key.arn
     }
   }
 

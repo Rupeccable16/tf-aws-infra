@@ -19,15 +19,15 @@ resource "aws_lambda_function" "my_lambda" {
   #   security_group_ids = [aws_security_group.lambda_security_group.id]
   # }
 
-  environment {
-    variables = {
-      DB_NAME          = "${var.aws_rds_db_name}",
-      DB_USER          = "${var.aws_rds_username}",
-      DB_PASSWORD      = "${var.aws_rds_password}",
-      DB_HOST          = "${aws_db_instance.my-db.address}"
-      SENDGRID_API_KEY = "${var.send_grip_api_key}"
-    }
-  }
+  # environment {
+  #   variables = {
+  #     DB_NAME          = "${var.aws_rds_db_name}",
+  #     DB_USER          = "${var.aws_rds_username}",
+  #     DB_PASSWORD      = "${data.aws_secretsmanager_secret_version.rds_pass.secret_string}",
+  #     DB_HOST          = "${aws_db_instance.my-db.address}"
+  #     SENDGRID_API_KEY = "${var.send_grip_api_key}"
+  #   }
+  # }
 }
 
 resource "aws_iam_role" "lambda_role" {
@@ -48,6 +48,7 @@ resource "aws_iam_role" "lambda_role" {
     ]
   })
 
+
   tags = {
     tag-key = "tag-value"
   }
@@ -58,9 +59,18 @@ data "aws_iam_policy" "lambda_policy" {
   name = var.aws_lambda_policy_name #var.aws_s3_get_post_delete_list_policy_name
 }
 
+data "aws_iam_policy" "lambda_policy_for_secrets" {
+  name = var.aws_lambda_policy_for_secrets_name
+}
+
 resource "aws_iam_role_policy_attachment" "lambda-policy-attach" {
   role       = aws_iam_role.lambda_role.name
   policy_arn = data.aws_iam_policy.lambda_policy.arn
+}
+
+resource "aws_iam_role_policy_attachment" "lambda-secrets-policy-attach" {
+  role       = aws_iam_role.lambda_role.name
+  policy_arn = data.aws_iam_policy.lambda_policy_for_secrets.arn
 }
 
 
