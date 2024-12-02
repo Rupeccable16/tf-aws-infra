@@ -14,6 +14,8 @@ resource "aws_lb_listener" "lb_listener" {
   load_balancer_arn = aws_lb.lb.arn
   port              = var.aws_lb_listener_port
   protocol          = var.aws_lb_listener_protocol
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = "arn:aws:acm:us-east-1:209479307750:certificate/7ba245c5-6739-42c7-8ba9-4da3c128df2e"
 
   default_action {
     type             = var.aws_lb_listener_default_action_type

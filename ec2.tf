@@ -20,6 +20,7 @@ data "template_file" "userdata" {
     AWS_REGION      = var.region
     TOPIC_ARN       = aws_sns_topic.user_updates.arn
     APP_DOMAIN      = var.aws_route53_demo_subdomain_name
+    AWS_S3_KEY      = aws_kms_key.s3_kms_key.arn
   }
 }
 

@@ -15,6 +15,7 @@ AWS_BUCKET_NAME="${AWS_BUCKET_NAME}"
 AWS_REGION="${AWS_REGION}"
 TOPIC_ARN="${TOPIC_ARN}"
 APP_DOMAIN="${APP_DOMAIN}"
+AWS_S3_KEY="${AWS_S3_KEY}"
 
 echo "Writing to .env"
 {
@@ -28,6 +29,7 @@ echo "Writing to .env"
   echo "ENVIRONMENT=PROD"
   echo "TOPIC_ARN=\"$TOPIC_ARN\""
   echo "APP_DOMAIN=\"$APP_DOMAIN\""
+  echo "AWS_S3_KEY=\"$AWS_S3_KEY\""
 
 } >> .env
 

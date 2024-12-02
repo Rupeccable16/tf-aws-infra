@@ -47,7 +47,7 @@ resource "aws_iam_role" "lambda_role" {
       },
     ]
   })
-  
+
 
   tags = {
     tag-key = "tag-value"
