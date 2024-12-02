@@ -810,3 +810,28 @@ variable "aws_lb_ssl_certificate_arn" {
   type        = string
   description = ""
 }
+
+variable "ec2_key_alias" {
+  type        = string
+  description = ""
+}
+
+variable "rds_key_alias" {
+  type        = string
+  description = ""
+}
+
+variable "s3_key_alias" {
+  type        = string
+  description = ""
+}
+
+variable "rds_pass_key_alias" {
+  type        = string
+  description = ""
+}
+
+variable "sendgrid_key_alias" {
+  type        = string
+  description = ""
+}

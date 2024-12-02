@@ -1,4 +1,33 @@
-data "aws_caller_identity" "current" {}
+data "aws_caller_identity" "current" {
+
+}
+
+resource "aws_kms_alias" "ec2_key_alias" {
+  name          = "alias/${var.ec2_key_alias}"
+  target_key_id = aws_kms_key.ec2_kms_key.id
+}
+
+resource "aws_kms_alias" "rds_key_alias" {
+  name          = "alias/${var.rds_key_alias}"
+  target_key_id = aws_kms_key.rds_kms_key.id
+}
+
+resource "aws_kms_alias" "s3_key_alias" {
+  name          = "alias/${var.s3_key_alias}"
+  target_key_id = aws_kms_key.s3_kms_key.id
+}
+
+resource "aws_kms_alias" "rds_pass_key_alias" {
+  name          = "alias/${var.rds_pass_key_alias}"
+  target_key_id = aws_kms_key.rds_password_kms_key.id
+}
+
+resource "aws_kms_alias" "sendgrid_key_alias" {
+  name          = "alias/${var.sendgrid_key_alias}"
+  target_key_id = aws_kms_key.sendGrid_kms_key.id
+}
+
+
 
 resource "aws_kms_key" "ec2_kms_key" {
   depends_on              = [aws_iam_role.ec2_role, aws_iam_instance_profile.ec2_instance_profile]
@@ -16,7 +45,7 @@ resource "aws_kms_key" "ec2_kms_key" {
         "Sid" : "Enable IAM User Permissions",
         "Effect" : "Allow",
         "Principal" : {
-          "AWS" : "arn:aws:iam::209479307750:root"
+          "AWS" : "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
         },
         "Action" : "kms:*",
         "Resource" : "*"
@@ -25,7 +54,7 @@ resource "aws_kms_key" "ec2_kms_key" {
         "Sid" : "Allow access for Key Administrators",
         "Effect" : "Allow",
         "Principal" : {
-          "AWS" : "arn:aws:iam::209479307750:user/awscli"
+          "AWS" : "arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/awscli"
         },
         "Action" : [
           "kms:Create*",
@@ -50,7 +79,7 @@ resource "aws_kms_key" "ec2_kms_key" {
         "Sid" : "Allow use of the key",
         "Effect" : "Allow",
         "Principal" : {
-          "AWS" : "arn:aws:iam::209479307750:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
+          "AWS" : "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
         },
         "Action" : [
           "kms:Encrypt",
@@ -65,7 +94,7 @@ resource "aws_kms_key" "ec2_kms_key" {
         "Sid" : "Allow attachment of persistent resources",
         "Effect" : "Allow",
         "Principal" : {
-          "AWS" : "arn:aws:iam::209479307750:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
+          "AWS" : "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
         },
         "Action" : [
           "kms:CreateGrant",
@@ -98,7 +127,7 @@ resource "aws_kms_key" "rds_kms_key" {
         "Sid" : "Enable IAM User Permissions",
         "Effect" : "Allow",
         "Principal" : {
-          "AWS" : "arn:aws:iam::209479307750:root"
+          "AWS" : "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
         },
         "Action" : "kms:*",
         "Resource" : "*"
@@ -107,7 +136,7 @@ resource "aws_kms_key" "rds_kms_key" {
         "Sid" : "Allow access for Key Administrators",
         "Effect" : "Allow",
         "Principal" : {
-          "AWS" : "*"
+          "AWS" : "arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/awscli"
         },
         "Action" : [
           "kms:Create*",
@@ -132,7 +161,7 @@ resource "aws_kms_key" "rds_kms_key" {
         "Sid" : "Allow use of the key",
         "Effect" : "Allow",
         "Principal" : {
-          "AWS" : "*" #arn:aws:iam::209479307750:role/aws-service-role/rds.amazonaws.com/AWSServiceRoleForRDS
+          "AWS" : "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/rds.amazonaws.com/AWSServiceRoleForRDS" #arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/rds.amazonaws.com/AWSServiceRoleForRDS
         },
         "Action" : [
           "kms:Encrypt",
@@ -141,20 +170,20 @@ resource "aws_kms_key" "rds_kms_key" {
           "kms:GenerateDataKey*",
           "kms:DescribeKey"
         ],
-        "Resource" : "arn:aws:rds*" #arn:aws:rds:us-east-1:209479307750:db:csye6225
+        "Resource" : "*" #arn:aws:rds:us-east-1:${data.aws_caller_identity.current.account_id}:db:csye6225
       },
       {
         "Sid" : "Allow attachment of persistent resources",
         "Effect" : "Allow",
         "Principal" : {
-          "AWS" : "*" #arn:aws:iam::209479307750:role/aws-service-role/rds.amazonaws.com/AWSServiceRoleForRDS
+          "AWS" : "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/rds.amazonaws.com/AWSServiceRoleForRDS" #arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/rds.amazonaws.com/AWSServiceRoleForRDS
         },
         "Action" : [
           "kms:CreateGrant",
           "kms:ListGrants",
           "kms:RevokeGrant"
         ],
-        "Resource" : "arn:aws:rds*", #arn:aws:rds:us-east-1:209479307750:db:csye6225
+        "Resource" : "*", #arn:aws:rds:us-east-1:${data.aws_caller_identity.current.account_id}:db:csye6225
         "Condition" : {
           "Bool" : {
             "kms:GrantIsForAWSResource" : "true"
@@ -180,7 +209,7 @@ resource "aws_kms_key" "s3_kms_key" {
         "Sid" : "Enable IAM User Permissions",
         "Effect" : "Allow",
         "Principal" : {
-          "AWS" : "arn:aws:iam::209479307750:root"
+          "AWS" : "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
         },
         "Action" : "kms:*",
         "Resource" : "*"
@@ -189,7 +218,7 @@ resource "aws_kms_key" "s3_kms_key" {
         "Sid" : "Allow access for Key Administrators",
         "Effect" : "Allow",
         "Principal" : {
-          "AWS" : "arn:aws:iam::209479307750:user/awscli"
+          "AWS" : "arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/awscli"
         },
         "Action" : [
           "kms:Create*",
@@ -214,7 +243,7 @@ resource "aws_kms_key" "s3_kms_key" {
         "Sid" : "Allow use of the key",
         "Effect" : "Allow",
         "Principal" : {
-          "AWS" : "*"
+          "AWS" : "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/ec2_role"
         },
         "Action" : [
           "kms:Encrypt",
@@ -223,20 +252,20 @@ resource "aws_kms_key" "s3_kms_key" {
           "kms:GenerateDataKey*",
           "kms:DescribeKey"
         ],
-        "Resource" : "arn:aws:s3:::*" #arn:aws:s3:::csye6225-bucket-39a79331-8d1e-0ea9-c318-e70398572c9d
+        "Resource" : "*" #arn:aws:s3:::csye6225-bucket-39a79331-8d1e-0ea9-c318-e70398572c9d
       },
       {
         "Sid" : "Allow attachment of persistent resources",
         "Effect" : "Allow",
         "Principal" : {
-          "AWS" : "*"
+          "AWS" : "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/ec2_role"
         },
         "Action" : [
           "kms:CreateGrant",
           "kms:ListGrants",
           "kms:RevokeGrant"
         ],
-        "Resource" : "arn:aws:s3:::*", #arn:aws:s3:::csye6225-bucket-39a79331-8d1e-0ea9-c318-e70398572c9d
+        "Resource" : "*", #arn:aws:s3:::csye6225-bucket-39a79331-8d1e-0ea9-c318-e70398572c9d
         "Condition" : {
           "Bool" : {
             "kms:GrantIsForAWSResource" : "true"
@@ -275,7 +304,7 @@ resource "aws_kms_key" "rds_password_kms_key" {
         "Resource" : "*",
         "Condition" : {
           "StringEquals" : {
-            "kms:CallerAccount" : "209479307750",
+            "kms:CallerAccount" : "${data.aws_caller_identity.current.account_id}",
             "kms:ViaService" : "secretsmanager.us-east-1.amazonaws.com",
 
           }
@@ -285,7 +314,7 @@ resource "aws_kms_key" "rds_password_kms_key" {
         "Sid" : "Enable IAM User Permissions",
         "Effect" : "Allow",
         "Principal" : {
-          "AWS" : "arn:aws:iam::209479307750:root"
+          "AWS" : "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
         },
         "Action" : "kms:*",
         "Resource" : "*"
@@ -294,7 +323,7 @@ resource "aws_kms_key" "rds_password_kms_key" {
         "Sid" : "Allow access for Key Administrators",
         "Effect" : "Allow",
         "Principal" : {
-          "AWS" : "arn:aws:iam::209479307750:user/awscli"
+          "AWS" : "arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/awscli"
         },
         "Action" : [
           "kms:Create*",
@@ -319,7 +348,7 @@ resource "aws_kms_key" "rds_password_kms_key" {
       #     "Sid": "AllowKeyAdminAccess",
       #     "Effect": "Allow",
       #     "Principal": {
-      #         "AWS": "arn:aws:iam::209479307750:user/awscli"
+      #         "AWS": "arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/awscli"
       #     },
       #     "Action": "kms:*",
       #     "Resource": "*"
@@ -356,7 +385,7 @@ resource "aws_kms_key" "sendGrid_kms_key" {
         "Resource" : "*",
         "Condition" : {
           "StringEquals" : {
-            "kms:CallerAccount" : "209479307750",
+            "kms:CallerAccount" : "${data.aws_caller_identity.current.account_id}",
             "kms:ViaService" : "secretsmanager.us-east-1.amazonaws.com",
 
           }
@@ -366,7 +395,7 @@ resource "aws_kms_key" "sendGrid_kms_key" {
         "Sid" : "Enable IAM User Permissions",
         "Effect" : "Allow",
         "Principal" : {
-          "AWS" : "arn:aws:iam::209479307750:root"
+          "AWS" : "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
         },
         "Action" : "kms:*",
         "Resource" : "*"
@@ -375,7 +404,7 @@ resource "aws_kms_key" "sendGrid_kms_key" {
         "Sid" : "Allow access for Key Administrators",
         "Effect" : "Allow",
         "Principal" : {
-          "AWS" : "arn:aws:iam::209479307750:user/awscli"
+          "AWS" : "arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/awscli"
         },
         "Action" : [
           "kms:Create*",
@@ -400,7 +429,7 @@ resource "aws_kms_key" "sendGrid_kms_key" {
       #     "Sid": "AllowKeyAdminAccess",
       #     "Effect": "Allow",
       #     "Principal": {
-      #         "AWS": "arn:aws:iam::209479307750:user/awscli"
+      #         "AWS": "arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/awscli"
       #     },
       #     "Action": "kms:*",
       #     "Resource": "*"
